@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: R for reproducible scientific analysis</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">R for reproducible scientific analysis</h1></a>
+          <h2 class="subtitle">Introduction to R and RStudio</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>To get familiar with the RStudio interface</li>
+<li>To get familiar with the buttons, shortcuts and options in Rstudio</li>
+<li>To understand R arithmetical and relational operations</li>
+<li>To understand variables and value assignment</li>
+</ul>
+</div>
+</section>
+<h3 id="introduction-to-rstudio">Introduction to RStudio</h3>
+<p>This lesson focuses on the fundamentals of R and <a href="http://www.rstudio.com/">RStudio</a>. The latter one is a free, open source R integrated development environment. It provides a built in editor, works on all platforms (including servers) and provides many advantages such as integration with version control and project management.</p>
+<p><strong>Basic layout</strong></p>
+<p>When you first open RStudio, you will find three panels:</p>
+<ul>
+<li>The interactive R Console (lower left)</li>
+<li>The Environments (Workspace/History) (upper right)</li>
+<li>The Files/Plots/Packages/Help (lower right)</li>
+</ul>
+<p>Once you open files, such as R scripts, a scripting panel will also open in the top left.</p>
+<h4 id="the-interactive-r-console-and-introduction-to-r">The interactive R console and introduction to R</h4>
+<p>A lot of your time in R will be spent in the R interactive console. This is where you will run all of your code, and can be a useful environment to try out ideas. This console in RStudio is the same as the one you would get if you just typed in <code>R</code> in your commandline environment.</p>
+<p>The first thing you will see in the R interactive session is a bunch of information, followed by a “&gt;” and a blinking cursor. In many ways this is similar to the shell environment: you type in commands, R tries to execute them, and then returns a result.</p>
+<h3 id="using-r-as-a-calculator">Using R as a calculator</h3>
+<p>The simplest thing you could do with R is do arithmetic:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> +<span class="st"> </span><span class="dv">100</span></code></pre></div>
+<pre class="output"><code>[1] 101
+</code></pre>
+<p>And R will print out the answer, with a preceding “[1]”. Don’t worry about this for now, we’ll explain that later. For now think of it as indicating output.</p>
+<p>Just like bash, if you type in an incomplete command, R will wait for you to complete it:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span><span class="dv">1</span> +</code></pre></div>
+<pre class="output"><code>+</code></pre>
+<p>Any time you hit return and the R session shows a “+” instead of a “&gt;”, it means it’s waiting for you to complete the command. If you want to cancel a command you can simply hit “Esc” and RStudio will give you back the “&gt;” prompt.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="tip-cancelling-commands"><span class="glyphicon glyphicon-pushpin"></span>Tip: Cancelling commands</h4>
+</div>
+<div class="panel-body">
+<p>If you’re using R from the commandline instead of from within RStudio, you need to use <code>Ctrl+C</code> instead of <code>Esc</code> to cancel the command. This applies to Mac users as well!</p>
+<p>Cancelling a command isn’t just useful for killing incomplete commands: you can also use it to tell R to stop running code (for example if its taking much longer than you’d expect), or to delete the command you’re currently writing.</p>
+</div>
+</aside>
+<p>When using R as a calculator, the order of operations is the same as you would have learnt back in school.</p>
+<p>From highest to lowest precedence:</p>
+<ul>
+<li>Parentheses: <code>(</code>, <code>)</code></li>
+<li>Exponents: <code>^</code> or <code>**</code></li>
+<li>Divide: <code>/</code></li>
+<li>Multiply: <code>*</code></li>
+<li>Add: <code>+</code></li>
+<li>Subtract: <code>-</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span><span class="dv">2</span></code></pre></div>
+<pre class="output"><code>[1] 13
+</code></pre>
+<p>Use parentheses to group to force the order of evaluation if it differs from the default, or to set your own order.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span>) *<span class="st"> </span><span class="dv">2</span></code></pre></div>
+<pre class="output"><code>[1] 16
+</code></pre>
+<p>But this can get unwieldy when not needed:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dv">3</span> +<span class="st"> </span>(<span class="dv">5</span> *<span class="st"> </span>(<span class="dv">2</span> ^<span class="st"> </span><span class="dv">2</span>))) <span class="co"># hard to read</span>
+<span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span><span class="dv">2</span> ^<span class="st"> </span><span class="dv">2</span>       <span class="co"># easier to read, once you know rules</span>
+<span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>(<span class="dv">2</span> ^<span class="st"> </span><span class="dv">2</span>)     <span class="co"># if you forget some rules, this might help</span></code></pre></div>
+<p>The text I’ve typed after each line of code is called a comment. Anything that follows on from the hash symbol <code>#</code> is ignored by R when it executes code.</p>
+<p>Really small or large numbers get a scientific notation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span>/<span class="dv">10000</span></code></pre></div>
+<pre class="output"><code>[1] 2e-04
+</code></pre>
+<p>Which is shorthand for “multiplied by <code>10^XX</code>”. So <code>2e-4</code> is shorthand for <code>2 * 10^(-4)</code>.</p>
+<p>You can write numbers in scientific notation too:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="fl">5e3</span>  <span class="co"># Note the lack of minus here</span></code></pre></div>
+<pre class="output"><code>[1] 5000
+</code></pre>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+</div>
+<div class="panel-body">
+<p>In the R console type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>/<span class="dv">0</span>
+<span class="dv">0</span>/<span class="dv">0</span></code></pre></div>
+<p>Can R handle division by 0? Does R throw an error? If not, what are the results of the above calculations?</p>
+</div>
+</section>
+<h4 id="introduction-to-r-built-in-functions">Introduction to R built in functions</h4>
+<p>A function is a sequence of program instructions that perform a specific task, packaged as a unit. This unit can then be used in programs wherever that particular task should be performed.</p>
+<p>R has many built in functions, a subset of which perform mathematical operations. To call a function, we simply type the function name, followed by an open and closing parenthesis. Anything we type inside those parentheses is called arguments and define the behaviour/output of the function.</p>
+<p>To get a list of all R built in functions type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">builtins</span>()  <span class="co"># lists R built in functions</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sin</span>(<span class="dv">1</span>)  <span class="co"># trigonometry functions</span></code></pre></div>
+<pre class="output"><code>[1] 0.841471
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(<span class="dv">1</span>)  <span class="co"># natural logarithm</span></code></pre></div>
+<pre class="output"><code>[1] 0
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log10</span>(<span class="dv">10</span>) <span class="co"># base-10 logarithm</span></code></pre></div>
+<pre class="output"><code>[1] 1
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">exp</span>(<span class="fl">0.5</span>) <span class="co"># e^(1/2)</span></code></pre></div>
+<pre class="output"><code>[1] 1.648721
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="ot">Inf</span>, <span class="dv">4</span>, <span class="dv">6</span>) <span class="co"># Return the maximum number</span></code></pre></div>
+<pre class="output"><code>[1] Inf
+</code></pre>
+<p>Don’t worry about trying to remember every function in R. You can simply look them up on google, or if you can remember the start of the function’s name, use the tab completion in RStudio.</p>
+<p>This is one advantage that RStudio has over R on its own, it has autocompletion abilities that allow you to more easily look up functions, their arguments, and the values that they take.</p>
+<h4 id="comparing-things">Comparing things</h4>
+<p>We can also do comparison in R:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> ==<span class="st"> </span><span class="dv">1</span>  <span class="co"># equality (note two equals signs, read as &quot;is equal to&quot;)</span></code></pre></div>
+<pre class="output"><code>[1] TRUE
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> !=<span class="st"> </span><span class="dv">2</span>  <span class="co"># inequality (read as &quot;is not equal to&quot;)</span></code></pre></div>
+<pre class="output"><code>[1] TRUE
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> &lt;<span class="st">  </span><span class="dv">2</span>  <span class="co"># less than</span></code></pre></div>
+<pre class="output"><code>[1] TRUE
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> &lt;=<span class="st"> </span><span class="dv">1</span>  <span class="co"># less than or equal to</span></code></pre></div>
+<pre class="output"><code>[1] TRUE
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> &gt;<span class="st"> </span><span class="dv">0</span>  <span class="co"># greater than</span></code></pre></div>
+<pre class="output"><code>[1] TRUE
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> &gt;=<span class="st"> </span>-<span class="dv">9</span> <span class="co"># greater than or equal to</span></code></pre></div>
+<pre class="output"><code>[1] TRUE
+</code></pre>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="tip-comparing-numbers"><span class="glyphicon glyphicon-pushpin"></span>Tip: Comparing Numbers</h4>
+</div>
+<div class="panel-body">
+<p>A word of warning about comparing numbers: you should never use <code>==</code> to compare two numbers unless they are integers (a data type which can specifically represent only whole numbers).</p>
+<p>Computers may only represent decimal numbers with a certain degree of precision, so two numbers which look the same when printed out by R, may actually have different underlying representations and therefore be different by a small margin of error (called Machine numeric tolerance).</p>
+<p>Instead you should use the <code>all.equal</code> function.</p>
+<p>Further reading: <a href="http://floating-point-gui.de/" class="uri">http://floating-point-gui.de/</a></p>
+</div>
+</aside>
+<h4 id="variables-and-value-assignment">Variables and value assignment</h4>
+<p>We can store values in variables using the assignment operator <code>&lt;-</code>, like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>/<span class="dv">40</span></code></pre></div>
+<p>Notice that assignment does not print a value. Instead, we stored it for later in something called a <strong>variable</strong>. <code>x</code> now contains the <strong>value</strong> <code>0.025</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre class="output"><code>[1] 0.025
+</code></pre>
+<p>More precisely, the stored value is a <em>decimal approximation</em> of this fraction called a <a href="http://en.wikipedia.org/wiki/Floating_point">floating point number</a>.</p>
+<p>Look for the <code>Environment</code> tab in one of the panes of RStudio, and you will see that <code>x</code> and its value have appeared. Our variable <code>x</code> can be used in place of a number in any calculation that expects a number:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(x)</code></pre></div>
+<pre class="output"><code>[1] -3.688879
+</code></pre>
+<p>Notice also that variables can be reassigned:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">100</span></code></pre></div>
+<p><code>x</code> used to contain the value 0.025 and and now it has the value 100.</p>
+<p>Assignment values can contain the variable being assigned to:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>x +<span class="st"> </span><span class="dv">1</span> <span class="co">#notice how RStudio updates its description of x on the top right tab</span></code></pre></div>
+<p>The right hand side of the assignment can be any valid R expression. The right hand side is <em>fully evaluated</em> before the assignment occurs.</p>
+<p>Variable names can contain letters, numbers, underscores and periods. They cannot start with a number nor contain spaces at all. Different people use different conventions for long variable names, these include</p>
+<ul>
+<li>periods.between.words</li>
+<li>underscores_between_words</li>
+<li>camelCaseToSeparateWords</li>
+</ul>
+<p>What you use is up to you, but <strong>be consistent</strong>.</p>
+<p>It is also possible to use the <code>=</code> operator for assignment:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span>/<span class="dv">40</span></code></pre></div>
+<p>But this is much less common among R users. The most important thing is to <strong>be consistent</strong> with the operator you use. There are occasionally places where it is less confusing to use <code>&lt;-</code> than <code>=</code>, and it is the most common symbol used in the community. So the recommendation is to use <code>&lt;-</code>.</p>
+<h4 id="managing-your-environment">Managing your environment</h4>
+<p>There are a few useful commands you can use to interact with the R session.</p>
+<p><code>ls</code> will list all of the variables and functions stored in the global environment (your working R session):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
+<pre class="output"><code>[1] &quot;hook_in&quot;  &quot;hook_out&quot; &quot;x&quot;       
+</code></pre>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="tip-hidden-objects"><span class="glyphicon glyphicon-pushpin"></span>Tip: hidden objects</h4>
+</div>
+<div class="panel-body">
+<p>Just like in the shell, <code>ls</code> will hide any variables or functions starting with a “.” by default. To list all objects, type <code>ls(all.names=TRUE)</code> instead</p>
+</div>
+</aside>
+<p>Note here that we didn’t given any arguments to <code>ls</code>, but we still needed to give the brackets to tell R to call the function.</p>
+<p>If we type <code>ls</code> by itself, R will print out the source code for that function!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ls</code></pre></div>
+<pre class="output"><code>function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
+    pattern) 
+{
+    if (!missing(name)) {
+        nameValue &lt;- try(name, silent = TRUE)
+        if (identical(class(nameValue), &quot;try-error&quot;)) {
+            name &lt;- substitute(name)
+            if (!is.character(name)) 
+                name &lt;- deparse(name)
+            warning(gettextf(&quot;%s converted to character string&quot;, 
+                sQuote(name)), domain = NA)
+            pos &lt;- name
+        }
+        else pos &lt;- nameValue
+    }
+    all.names &lt;- .Internal(ls(envir, all.names))
+    if (!missing(pattern)) {
+        if ((ll &lt;- length(grep(&quot;[&quot;, pattern, fixed = TRUE))) &amp;&amp; 
+            ll != length(grep(&quot;]&quot;, pattern, fixed = TRUE))) {
+            if (pattern == &quot;[&quot;) {
+                pattern &lt;- &quot;\\[&quot;
+                warning(&quot;replaced regular expression pattern &#39;[&#39; by  &#39;\\\\[&#39;&quot;)
+            }
+            else if (length(grep(&quot;[^\\\\]\\[&lt;-&quot;, pattern))) {
+                pattern &lt;- sub(&quot;\\[&lt;-&quot;, &quot;\\\\\\[&lt;-&quot;, pattern)
+                warning(&quot;replaced &#39;[&lt;-&#39; by &#39;\\\\[&lt;-&#39; in regular expression pattern&quot;)
+            }
+        }
+        grep(pattern, all.names, value = TRUE)
+    }
+    else all.names
+}
+&lt;bytecode: 0x7fd893942358&gt;
+&lt;environment: namespace:base&gt;
+</code></pre>
+<p>You can use <code>rm</code> to delete objects you no longer need:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(x)</code></pre></div>
+<p>If you have lots of things in your environment and want to delete all of them, you can pass the results of <code>ls</code> to the <code>rm</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</code></pre></div>
+<p>In this case we’ve combined the two. Just like the order of operations, anything inside the innermost brackets is evaluated first, and so on.</p>
+<p>In this case we’ve specified that the results of <code>ls</code> should be used for the <code>list</code> argument in <code>rm</code>. When assigning values to arguments by name, you <em>must</em> use the <code>=</code> operator!!</p>
+<p>If instead we use <code>&lt;-</code>, there will be unintended side effects, or you may just get an error message:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(list &lt;-<span class="st"> </span><span class="kw">ls</span>())</code></pre></div>
+<pre class="output"><code>Error in rm(list &lt;- ls()): ... must contain names or character strings
+</code></pre>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="tip-warnings-vs.errors"><span class="glyphicon glyphicon-pushpin"></span>Tip: Warnings vs. Errors</h4>
+</div>
+<div class="panel-body">
+<p>Pay attention when R does something unexpected! Errors, like above, are thrown when R cannot proceed with a calculation. Warnings on the other hand usually mean that the function has run, but it probably hasn’t worked as expected.</p>
+<p>In both cases, the message that R prints out usually give you clues on how to fix a problem.</p>
+</div>
+</aside>
+<h4 id="work-flow-within-rstudio">Work flow within Rstudio</h4>
+<p>There are two main ways one can work within Rstudio.</p>
+<ol style="list-style-type: decimal">
+<li>Run single commands within the interactive R console.</li>
+<li>This works well when testing small chunck of code.</li>
+<li>Becomes quickly laboursome and unreproducible.</li>
+<li>Type the commands in .R files in the script editor and use Rstudio’s command/short cut to run a current line or selected lines on the interactive R console.</li>
+<li>This way all commands are saved for later reference/run.</li>
+</ol>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="tip-pushing-to-the-interactive-r-console"><span class="glyphicon glyphicon-pushpin"></span>Tip: Pushing to the interactive R console</h4>
+</div>
+<div class="panel-body">
+<p>To run the current line click on the <code>Run</code> button just above the file pane. Or use the <code>Ctrl-Enter</code> short cut, which can be see by hovering the mouse over the button.</p>
+<p>To run a block of code, select it and then <code>Run</code>. If you have modified a line of code within a block of code you have just run, there is no need to reselect the section and press <code>Run</code>. Instead you can use the next button along, <code>Re-run the previous region</code>, which will run the previous code block but with the modifications you have just made.</p>
+</div>
+</aside>
+<p>If R is ready to accept commands, the R console shows a <code>&gt;</code> prompt. If it receives a command (by typing, copy-pasting or sent from the script editor using <code>Ctrl-Enter</code>), R will try to execute it, and when ready, show the results and come back with a new <code>&gt;</code>-prompt to wait for new commands.</p>
+<p>If R is still waiting for you to enter more data because it isn’t complete yet, the console will show a <code>+</code> prompt. It means that you haven’t finished entering a complete command. This is because you have not ‘closed’ a parenthesis or quotation. If you’re in RStudio and this happens, click inside the console window and press <code>Esc</code>; this should help you out of trouble.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="tip-switching-between-script-and-control-consoles"><span class="glyphicon glyphicon-pushpin"></span>Tip: Switching between script and control consoles</h4>
+</div>
+<div class="panel-body">
+<p>At some point in your analysis you may want to check the content of a variable without necessarily adding the command to your script. To avoid that you can type these commands directly on the interactive console. RStudio provides the <code>Ctrl-1</code> and <code>Ctrl-2</code> short cuts that allow you to jump between the script and theconsoles.</p>
+</div>
+</aside>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-1-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+</div>
+<div class="panel-body">
+<p>Draw diagrams showing what variables refer to what values after each statement in the following program:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mass &lt;-<span class="st"> </span><span class="fl">47.5</span>
+age &lt;-<span class="st"> </span><span class="dv">122</span>
+mass &lt;-<span class="st"> </span>mass *<span class="st"> </span><span class="fl">2.3</span>
+age &lt;-<span class="st"> </span>age -<span class="st"> </span><span class="dv">20</span></code></pre></div>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-2"><span class="glyphicon glyphicon-pencil"></span>Challenge 2</h4>
+</div>
+<div class="panel-body">
+<p>Run the code from the previous challenge, and write a command to compare mass to age. Is mass larger than age?</p>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-3"><span class="glyphicon glyphicon-pencil"></span>Challenge 3</h4>
+</div>
+<div class="panel-body">
+<p>Clean up your working environment by deleting the mass and age variables.</p>
+</div>
+</section>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
