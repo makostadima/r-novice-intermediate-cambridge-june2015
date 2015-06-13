@@ -2,77 +2,49 @@
 layout: page
 title: R for reproducible scientific analysis
 subtitle: Introduction to R and RStudio
-minutes: 45
+minutes: 20
 ---
 
 
+> ## Learning Objectives {.objectives}
+>
+> * To get familiar with the RStudio interface
+> * To get familiar with the buttons, shortcuts and options in Rstudio
+> * To understand R arithmetical and relational operations
+> * To understand variables and value assignment 
 
-> ## Learning objectives {.objectives}
->
-> * To gain familiarity with the various panes in the RStudio IDE
-> * To gain familiarity with the buttons, short cuts and options in the Rstudio IDE
-> * To understand variables and how to assign to them
-> * To be able to manage your workspace in an interactive R session
-> * To be able to use mathematical and comparison operations
-> * To be able to call functions
->
 
 ### Introduction to RStudio
 
-Welcome to the R portion of the Software Carpentry workshop.
-
-Throughout this lesson, we're going to teach you some of the fundamentals of
-the R language as well as some best practices for organising code for
-scientific projects that will make your life easier.
-
-We'll be using RStudio: a free, open source R integrated development
-environment. It provides a built in editor, works on all platforms (including
-on servers) and provides many advantages such as integration with version
-control and project management.
+This lesson focuses on the fundamentals of R and [RStudio](http://www.rstudio.com/). 
+The latter one is a free, open source R integrated development environment. It provides 
+a built in editor, works on all platforms (including servers) and provides many 
+advantages such as integration with version control and project management.
 
 **Basic layout**
 
-When you first open RStudio, you will be greeted by three panels:
+When you first open RStudio, you will find three panels:
 
-  * The interactive R console (entire left)
-  * Workspace/History (tabbed in upper right)
-  * Files/Plots/Packages/Help (tabbed in lower right)
+  * The interactive R Console (lower left)
+  * The Environments (Workspace/History) (upper right)
+  * The Files/Plots/Packages/Help (lower right)
 
 Once you open files, such as R scripts, a scripting panel will also open in the top left.
 
-#### Work flow within Rstudio
-There are two main ways one can work within Rstudio.
 
-1. Test and play within the interactive R console then copy code into a .R file to run later.
-  1.  This works well when doing small tests and initially starting off.
-  2.  Becomes laboursome.
-2. Start writing in an .R file and use Rstudio's command / short cut to push current line, selected lines or modified lines to the interactive R console.
-  1. This is great way to start and work as all workings are saved for latter reference and can be read latter.
-
-> #### Tip: Pushing to the interactive R console {.callout}
-> To run the current line click on the `Run` button just above the file pane. Or use the short cut which can be see
-> by hovering the mouse over the button.
->
-> To run a block of code, select it and then `Run`. If you have modified a line
-> of code within a block of code you have just run. There is no need to reselct the section and `Run`,
-> you can use the next button along, `Re-run the previous region`. This will run the previous code block inculding
-> the modifications you have made.
->
-
-### Introduction to R
+#### The interactive R console and introduction to R
 
 A lot of your time in R will be spent in the R interactive console. This is where you
-will run all of your code, and can be a useful environment to try out ideas before
-adding them to an R script file. This console in RStudio is the same as the one you
-would get if you just typed in `R` in your commandline environment.
+will run all of your code, and can be a useful environment to try out ideas. This console 
+in RStudio is the same as the one you would get if you just typed in `R` in your 
+commandline environment.
 
 The first thing you will see in the R interactive session is a bunch of information,
 followed by a ">" and a blinking cursor. In many ways this is similar to the shell
-environment you learnt about during the shell lessons: it operates on the same idea
-of a "Read, evaluate, print loop": you type in commands, R tries to execute them, and
+environment: you type in commands, R tries to execute them, and
 then returns a result.
 
-#### Using R as a calculator
+### Using R as a calculator
 
 The simplest thing you could do with R is do arithmetic:
 
@@ -89,7 +61,7 @@ The simplest thing you could do with R is do arithmetic:
 ~~~
 
 And R will print out the answer, with a preceding "[1]". Don't worry about this
-for now, we'll explain that later. For now think of it as indicating ouput.
+for now, we'll explain that later. For now think of it as indicating output.
 
 Just like bash, if you type in an incomplete command, R will wait for you to
 complete it:
@@ -115,7 +87,7 @@ prompt.
 >
 > Cancelling a command isn't just useful for killing incomplete commands:
 > you can also use it to tell R to stop running code (for example if its
-> taking much longer than you expect), or to get rid of the code you're
+> taking much longer than you'd expect), or to delete the command you're
 > currently writing.
 >
 
@@ -124,7 +96,7 @@ would have learnt back in school.
 
 From highest to lowest precedence:
 
- * Brackets: `(`, `)`
+ * Parentheses: `(`, `)`
  * Exponents: `^` or `**`
  * Divide: `/`
  * Multiply: `*`
@@ -143,7 +115,7 @@ From highest to lowest precedence:
 
 ~~~
 
-Use brackets (actually parentheses) to group to force the order of evaluation
+Use parentheses to group to force the order of evaluation
 if it differs from the default, or to set your own order.
 
 
@@ -169,8 +141,7 @@ But this can get unwieldy when not needed:
 
 
 The text I've typed after each line of code is called a comment. Anything that
-follows on from the octothorpe (or hash) symbol `#` is ignored by R when it
-executes code.
+follows on from the hash symbol `#` is ignored by R when it executes code.
 
 Really small or large numbers get a scientific notation:
 
@@ -203,12 +174,35 @@ You can write numbers in scientific notation too:
 
 ~~~
 
-#### Mathematical functions
+> #### Challenge 1 {.challenge}
+>
+> In the R console type:
+>
+> ~~~{.r}
+> 1/0
+> 0/0
+> ~~~
+>
+> Can R handle division by 0?
+> Does R throw an error? If not, what are the results of the above calculations?
 
-R has many built in mathematical functions. To call a function,
-we simply type its name, follow by and open and closing bracket.
-Anything we type inside those brackets is called the function's
-arguments:
+
+#### Introduction to R built in functions
+
+A function is a sequence of program instructions that perform a specific task, 
+packaged as a unit. This unit can then be used in programs wherever that particular 
+task should be performed.
+
+R has many built in functions, a subset of which perform mathematical operations.
+To call a function, we simply type the function name, followed by an open and closing
+parenthesis. Anything we type inside those parentheses is called arguments and define 
+the behaviour/output of the function.
+
+To get a list of all R built in functions type:
+
+~~~{.r}
+builtins()  # lists R built in functions
+~~~
 
 
 ~~~{.r}
@@ -258,6 +252,19 @@ exp(0.5) # e^(1/2)
 
 ~~~
 
+
+~~~{.r}
+max(5, 0, Inf, 4, 6) # Return the maximum number
+~~~
+
+
+
+~~~{.output}
+[1] Inf
+
+~~~
+
+
 Don't worry about trying to remember every function in R. You
 can simply look them up on google, or if you can remember the
 start of the function's name, use the tab completion in RStudio.
@@ -267,11 +274,6 @@ has autocompletion abilities that allow you to more easily
 look up functions, their arguments, and the values that they
 take.
 
-Typing a `?` before the name of a command will open the help page
-for that command. As well as providing a detailed description of
-the command and how it works, scrolling ot the bottom of the
-help page will usually show a collection of code examples which
-illustrate command usage. We'll go through an example later.
 
 #### Comparing things
 
@@ -368,7 +370,8 @@ We can also do comparison in R:
 > Further reading: [http://floating-point-gui.de/](http://floating-point-gui.de/)
 >
 
-#### Variables and assignment
+
+#### Variables and value assignment
 
 We can store values in variables using the assignment operator `<-`, like this:
 
@@ -572,9 +575,47 @@ Error in rm(list <- ls()): ... must contain names or character strings
 > hasn't worked as expected.
 >
 > In both cases, the message that R prints out usually give you clues
-> how to fix a problem.
+> on how to fix a problem.
 >
 
+
+#### Work flow within Rstudio
+There are two main ways one can work within Rstudio.
+
+1. Run single commands within the interactive R console.
+  1.  This works well when testing small chunck of code.
+  2.  Becomes quickly laboursome and unreproducible.
+2. Type the commands in .R files in the script editor and use Rstudio's 
+command/short cut to run a current line or selected lines on the interactive R console.
+  1. This way all commands are saved for later reference/run.
+
+> #### Tip: Pushing to the interactive R console {.callout}
+> To run the current line click on the `Run` button just above the file pane. Or use the 
+> `Ctrl-Enter` short cut, which can be see by hovering the mouse over the button.
+>
+> To run a block of code, select it and then `Run`. If you have modified a line
+> of code within a block of code you have just run, there is no need to reselect the section 
+> and press `Run`. Instead you can use the next button along, `Re-run the previous region`, 
+> which will run the previous code block but with the modifications you have just made.
+>
+
+If R is ready to accept commands, the R console shows a `>` prompt. If it
+receives a command (by typing, copy-pasting or sent from the script editor using
+`Ctrl-Enter`), R will try to execute it, and when ready, show the results and
+come back with a new `>`-prompt to wait for new commands.
+
+If R is still waiting for you to enter more data because it isn't complete yet,
+the console will show a `+` prompt. It means that you haven't finished entering
+a complete command. This is because you have not 'closed' a parenthesis or
+quotation. If you're in RStudio and this happens, click inside the console
+window and press `Esc`; this should help you out of trouble.
+
+> #### Tip: Switching between script and control consoles {.callout}
+> At some point in your analysis you may want to check the content of a variable 
+> without necessarily adding the command to your script. To avoid that you can type 
+> these commands directly on the interactive console. RStudio provides the `Ctrl-1` 
+> and `Ctrl-2` short cuts that allow you to jump between the script and theconsoles.
+>
 
 > #### Challenge 1 {.challenge}
 >
@@ -601,3 +642,4 @@ Error in rm(list <- ls()): ... must contain names or character strings
 > Clean up your working environment by deleting the mass and age
 > variables.
 >
+
