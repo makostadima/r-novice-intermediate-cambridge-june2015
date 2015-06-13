@@ -3,28 +3,30 @@ layout: page
 title: R for reproducible scientific analysis
 ---
 
-Introduction to R for non-programmers using gapminder data.
+Introduction to R for novice programmers.
 
-The goal of this lesson is to teach novice to intermediate programmers to write modular code
-and best practices for using R for data analysis. R is commonly used in many
-scientific disciplines for statistical analysis and its array of third-party
-packages. We find that many scientists who come to Software Carpentry workshops
-use R and want to learn more. The emphasis of these materials is to give
-attendees a strong foundation in the fundamentals of R, and to teach best
-practices for scientific computing: breaking down analyses into modular units,
-task automation, and encapsulation.
+The goal of this lesson is to teach novice programmers to write modular code, 
+independent of programming language. 
 
-Note that this workshop will focus on teaching the fundamentals of the 
-programming language R, and will not teach statistical analysis.
+[R](http://www.r-project.org/) was chosen because it is an open source, cross 
+platform software environment 
+popular across different disciplines for statistical analysis and graphics. R 
+comes with an extensive list of third-party packages and documentation, driven 
+by a highly active developers community.
 
-A variety of third party packages are used throughout this workshop. These
-are not necessarily the best, nor are they comprehensive, but they are 
-packages we find useful, and have been chosen primarily for their 
-usability.
+The emphasis of these materials is to give attendees a strong foundation in the 
+fundamentals of R, and to teach best practices for scientific computing, such as 
+breaking down analyses into modular units, task automation, and encapsulation.
+
+Note that this workshop will not teach any statistical analysis.
+
+Disclaimer: A variety of third party packages are used throughout this workshop. 
+These are not necessarily the best, nor are they comprehensive, but they are 
+packages we find useful, and have been chosen primarily for their usability.
 
 > ## Prerequisites {.prereq}
 >
-> Have attended the Shell and Git sessions.
+> The participants are expected to have attended the shell and git sessions.
 >
 
 ## Topics
