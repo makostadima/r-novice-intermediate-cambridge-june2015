@@ -15,13 +15,13 @@ minutes: 45
 > - To use R functions to extract the type, class, and structure of an R object.
 >
 
-### Data Types
+#### Data Types
 
 Before we can analyse any data, we need to have a strong
-understanding of the basic data types and structures, in which we can store
+understanding of the basic data types and structures in which we can store
 information. This is particularly important for efficient and frustration-free programming.
 
-R has 5 basic atomic types (meaning they can't be broken down into anything smaller):
+R has five basic atomic types (meaning they can't be broken down into anything smaller):
 
 * logical (e.g., `TRUE`, `FALSE`)
 * numeric
@@ -57,7 +57,7 @@ is.character() # is it character data?
 > anything unexpected?
 >
 
-### Data Structures
+#### Data Structures
 
 There are five data structures you will commonly encounter in R. These are:
 
@@ -67,13 +67,11 @@ There are five data structures you will commonly encounter in R. These are:
 * matrix
 * data.frame
 
-For now, let's focus on vectors in more detail, to discover more about data types.
+### Vectors
 
-#### Vectors
-
-A vector is the most common and basic data structure in `R` and is pretty much
-the workhorse of R. They are sometimes referred to as atomic vectors, because
-importantly, they can **only contain one data type**. They are the building blocks of
+A vector is the most common and basic data structure and is pretty much
+the workhorse of `R`. It is sometimes referred to as atomic vector, because 
+they can **only contain one data type**. Vectors are the building blocks of
 every other data structure.
 
 A vector can contain any of the five types we introduced before:
@@ -201,8 +199,8 @@ seq(1, 10, by = 0.1)
 
 > #### Tip: Creating integers {.callout}
 >
-> When you combine numbers using the concatenate function, `c()` the type
-> will automatically become "numeric", that is real/decimal numbers. If you
+> When you combine numbers using the concatenate function `c()`, the type of
+> the values stored will automatically become "numeric", which is real/decimal numbers. If you
 > specifically want to create a vector of integers (whole numbers only),
 > you need to append each number with an L, i.e. `c(10L, 12L, 45L, 33L)`.
 >
@@ -309,7 +307,7 @@ as.logical(x)
 
 ~~~
 
-This is behaviour you will find in many programming languages. 0 is
+It is common in many programming languages for 0 to represent
 FALSE, while every other number is treated as TRUE.
 Sometimes coercions, especially nonsensical ones won't work.
 
@@ -476,7 +474,7 @@ str(x)
 
 You can use `rownames`, `colnames`, and `dimnames` to set or
 retrieve the column and rownames of a matrix. The functions `nrow` and `ncol`
-will tell you the number of rows and columns (this also applies to data frames!),
+will tell you the number of rows and columns,
 while `length` will tell you the number of elements.
 
 >
@@ -502,11 +500,11 @@ while `length` will tell you the number of elements.
 #### Factors
 
 Factors are special vectors that represent categorical data. Factors can be
-ordered or unordered and are important when for modeling functions such as
-`aov()`, `lm()` and `glm()` and also in plot methods.
+ordered or unordered and are important for modeling functions, such as
+`aov()`, `lm()` and `glm()`, or for plot functions.
 
-Factors can only contain predefined values, and we can create one with the
-`factor` function:
+Factors can only contain predefined values, and we can create one by calling the 
+function `factor`.
 
 
 ~~~{.r}
@@ -541,8 +539,8 @@ This reveals something important: while factors look (and often behave) like
 character vectors, they are actually integers under the hood, and here, we can
 see that "no" is represented by a 1, and "yes" a 2.
 
-In modeling functions, important to know what baseline levels is.  This is the
-first factor but by default the ordering is determined by alphabetical order of
+In modeling functions, it is paramount to know what the baseline level is. This is the
+first factor, but by default the ordering is determined by alphabetical order of
 words entered. You can change this by specifying the levels:
 
 
@@ -565,10 +563,10 @@ results of statistical models!
 #### Lists
 
 If you want to combine different types of data, you will need to use lists.
-Lists act as containers, and can contain any type of data structure, even
+Lists act as containers for any type of data structure, even
 themselves!
 
-Lists can be created using `list` or coerced from other objects using `as.list()`:
+Lists can be created using the function `list` or coerced from other objects using `as.list()`:
 
 
 ~~~{.r}
