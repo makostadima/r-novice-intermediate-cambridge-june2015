@@ -32,10 +32,10 @@ packages we find useful, and have been chosen primarily for their usability.
 ## Topics
 
 1.  [Introduction to R and RStudio](01-rstudio-intro.html)
-2.  [Project Management](02-project-intro.html)
-3.  [Seeking help](03-seeking-help.html)
-4.  [Data types and structures](04-data-structures-part1.html)
-5.  [Data structures: data frames](05-data-structures-part2.html)
+2.  [Data types and structures](02-data-structures-part1.html)
+3.  [Data structures: data frames](03-data-structures-part2.html)
+4.  [Seeking help](04-seeking-help.html)
+5.  [Project Management](05-project-intro.html)
 6.  [Subsetting data](06-data-subsetting.html)
 7.  [Functions](07-functions.html)
 8.  [Plotting](08-plot-ggplot2.html)
