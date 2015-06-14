@@ -14,7 +14,7 @@ minutes: 15
 > * To become familiar with R help files for functions and special 
 operators.
 > * To be able to use CRAN task views to identify packages to solve a problem.
-> * To be able to seek help from your peers
+> * To be able to seek help from your peers.
 >
 
 ### Reading Help files
