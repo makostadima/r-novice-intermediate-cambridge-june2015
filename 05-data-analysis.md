@@ -7,70 +7,133 @@ minutes: 45
 
 
 
-> ## Learning objectives {.objectives}
->
-> * Become familiar with data frames
-> * To be able to read in regular data into R
->
+> ## Learning Objectives {.objectives}
+> * Read tabular data from a file into a program.
+> * Select individual values and subsections from data.
+> * Perform operations on a data frame of data.
+> * Display simple graphs.
 
-### Data frames
+We are studying the changes in total population, life expectancy and gross national income per capita (US $ by exchange rate) for 142 countries over a period of 55 years with measurements taken every 5 year, from 1952 to 2207. The data sets are stored in [comma-separated values](reference.html#comma-separated-values-(csv)) (CSV) format. Each row holds the observations for a country at one time point. The columns hold the following information: country, year, total population, continent,  life expectancy and gross national income per capita. For more information visit the [Gapminder website](http://www.gapminder.org/data/documentation/).
 
-Data frames are similar to matrices, except each column can be a different atomic type.
-Underneath the hood, data frames are really lists, where each element is
-an atomic vector, with the added restriction that they're all the same length.
-As you will see, if we pull out one column of a data frame, we will have a vector.
+The first few rows of our first file look like this:
 
 
-Data frames can be created manually with the `data.frame` function:
+~~~{.output}
+country,year,pop,continent,lifeExp,gdpPercap
+Afghanistan,1952,8425333,Asia,28.801,779.4453145
+Afghanistan,1957,9240934,Asia,30.332,820.8530296
+Afghanistan,1962,10267083,Asia,31.997,853.10071
+Afghanistan,1967,11537966,Asia,34.02,836.1971382
+Afghanistan,1972,13079460,Asia,36.088,739.9811058
+Afghanistan,1977,14880372,Asia,38.438,786.11336
+Afghanistan,1982,12881816,Asia,39.854,978.0114388
+Afghanistan,1987,13867957,Asia,40.822,852.3959448
+Afghanistan,1992,16317921,Asia,41.674,649.3413952
+
+~~~
+
+
+We want to:
+
+* Load data into memory,
+* Calculate the average value of total population per year across all countries, and
+* Plot the results.
+
+### Loading Data
+
+To load our gapminder data, first we need to tell our computer where is the file that contains the values. We know its name is `gapminder-FiveYearData.csv`. This is very important in R, if we forget this step we'll get an error message when trying to read. We can change the current working directory using the function `setwd`. For this example, we change the path to the working directory where our project is stored that is named `test_project`:
 
 
 ~~~{.r}
-df <- data.frame(id = c('a', 'b', 'c', 'd', 'e', 'f'), x = 1:6, y = c(214:219))
-df
+setwd("~/test_project")
+~~~
+
+Alternatively you can change the working directory using the RStudio GUI using the menu option `Session` -> `Set Working Directory` -> `Choose Directory...`
+
+We also know that experimental files are located in the directory `data` inside the working directory. Now we can load the data into R using `read.csv`:
+
+
+~~~{.r}
+read.csv(file = "data/gapminder-FiveYearData.csv", header = TRUE)
+~~~
+
+The expression `read.csv(...)` is a [function call](reference.html#function-call) that asks R to run the function `read.csv`.
+
+`read.csv` has two [arguments](reference.html#argument): the name of the file we want to read, and whether the first line of the file contains names for the columns of data.
+The filename needs to be a character string (or [string](reference.html#string) for short), so we put it in quotes. Assigning the second argument, `header`, to be `TRUE` indicates that the data file has column headers.
+
+
+> ## Tip {.callout}
+>
+> `read.csv` is a fairly thin wrapper around `read.table`, a more general 
+> R function to read data. `read.csv` is a function specific for comma 
+> separated data.
+> 
+> Another file format you might encounter is the tab-separated. To read such 
+> files, use `read.delim` and specify a tab as a separator using `sep="\t"`.
+>
+> You can also read in files from the Internet by replacing
+> the file paths with a web address.
+>
+> Finally, you can also read directly from excel spreadsheets without
+> converting them to plain text first by using the `xlsx` package.
+>
+
+Since we didn't tell it to do anything else with the function's output, the console will display the full contents of the file `gapminder-FiveYearData.csv`.
+
+> #### Challenge 1 {.challenge}
+>
+> Go to file -> new file -> R script, and write an R script to
+> read the gapminder dataset and assign it to a variable named `gapminder` . 
+> 
+> Create a new folder in your project named `scripts/`, store the R script
+> under it and add it to version control.
+>
+> Run the script using the `source` function, using the file path
+> as its argument (or by pressing the "source" button in RStudio).
+>
+> What is the data structure of `gapminder`? (hint: use function `class`)
+>
+
+Data frames are similar to matrices, except each column can be a different atomic type. Underneath the hood, data frames are really lists, where each element is an atomic vector, with the added restriction that they're all the same length. Data frames are very useful for storing data and you will find them elsewhere when programming in R. A typical data frame of experimental data contains individual observations in rows and variables in columns.
+
+We can see the dimensions, or [shape](reference.html#shape-(of-an-array)), of the data frame with the function `dim`:
+
+
+~~~{.r}
+dim(gapminder)
 ~~~
 
 
 
 ~~~{.output}
-  id x   y
-1  a 1 214
-2  b 2 215
-3  c 3 216
-4  d 4 217
-5  e 5 218
-6  f 6 219
+[1] 1705    6
 
 ~~~
 
-> #### Challenge: Data frames {.challenge}
->
-> Try using the `length` function to query
-> your data frame `df`. Does it give the result
-> you expect?
->
+This tells us that our data frame, `dat`, has 1705 rows and 6 columns. Alternatively, you can see the number of rows and columns using the functions `nrow` and `ncol`, respectively.
 
-Each column in the data frame is simply a list element, which is why when you ask for the
-`length` of the data frame, it tells you the number of columns. If you actually want
-the number of rows, you can use the `nrow` function.
-
-We can add rows or columns to a data.frame using `rbind` or `cbind` (these are
-the two-dimensional equivalents of the `c` function):
-
+If we want to get a single value from the data frame, we can provide an [index](reference.html#index) in square brackets, just as we do in math:
 
 ~~~{.r}
-df <- rbind(df, list("g", 11, 42))
+# first value in dat
+gapminder[1, 1]
 ~~~
 
-This doesn't work as expected! What does this error message tell us?
 
-It sounds like it was trying to generate a factor level. Why? Perhaps our first
-column (containing characters) is to blame...
-We can access a column in a `data.frame` by using the `$` operator.
+~~~{.output}
+[1] Afghanistan
+142 Levels: Afghanistan Albania Algeria Angola Argentina Australia ... Zimbabwe
 
+~~~
+
+R automatically stored this first column as a factor, not a character vector.
+We can change this:
 
 
 ~~~{.r}
-class(df$id)
+gapminder$country <- as.character(gapminder$country)
+class(gapminder$country)
 ~~~
 
 
@@ -80,118 +143,53 @@ class(df$id)
 
 ~~~
 
-Indeed, R automatically made this first column a factor, not a character vector.
-We can change this in place by converting the type of this column.
+
+An index like `[1, 1]` selects a single element of a data frame, but we can select whole sections as well. For example, we can select the first five measurements (rows) like this:
 
 
 ~~~{.r}
-df$id <- as.character(df$id)
-class(df$id)
+gapminder[1:5, ]
 ~~~
 
 
 
 ~~~{.output}
-[1] "character"
-
+      country year      pop continent lifeExp gdpPercap
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+4 Afghanistan 1967 11537966      Asia  34.020  836.1971
+5 Afghanistan 1972 13079460      Asia  36.088  739.9811
 ~~~
 
-Okay, now let's try adding that row again.
+The [slice](reference.html#slice) `1:5` means, "Start at index 1 and go to index 5". To select all the columns you simply don't include a slice for the those and R returns them all. If we don't provide a slice for either rows or columns, e.g. `dat[, ]`, R returns the full data frame.
+
+
+The slice does not need to start at 1, e.g. the line below selects rows 5 through 10:
 
 
 ~~~{.r}
-df <- rbind(df, list("g", 11, 42))
-tail(df, n=3)
+gapminder[5:10, ]
 ~~~
 
 
-
-~~~{.output}
-  id  x   y
-6  f  6 219
-7  g 11  42
-8  g 11  42
-
-~~~
-
-Note that to add a row, we need to use a list, because each column is a different type!
-If you want to add multiple rows to a data.frame, you will need to separate the new columns
-in the list:
+We can use the function `c` to select non-contiguous values:
 
 
 ~~~{.r}
-df <- rbind(df, list(c("l", "m"), c(12, 13), c(534, -20)))
-tail(df, n=3)
+gapminder[c(3, 8, 37, 56), c("country", "year", "pop")]
 ~~~
-
 
 
 ~~~{.output}
-   id  x   y
-8   g 11  42
-9   l 12 534
-10  m 13 -20
+       country year      pop
+3  Afghanistan 1962 10267083
+8  Afghanistan 1987 13867957
+37      Angola 1952  4232095
+56   Argentina 1987 31620918
 
 ~~~
 
-You can also row-bind data.frames together:
-
-
-~~~{.r}
-rbind(df, df)
-~~~
-
-
-
-~~~{.output}
-   id  x   y
-1   a  1 214
-2   b  2 215
-3   c  3 216
-4   d  4 217
-5   e  5 218
-6   f  6 219
-7   g 11  42
-8   g 11  42
-9   l 12 534
-10  m 13 -20
-11  a  1 214
-12  b  2 215
-13  c  3 216
-14  d  4 217
-15  e  5 218
-16  f  6 219
-17  g 11  42
-18  g 11  42
-19  l 12 534
-20  m 13 -20
-
-~~~
-
-To add a column we can use `cbind`:
-
-
-~~~{.r}
-df <- cbind(df, 10:1)
-df
-~~~
-
-
-
-~~~{.output}
-   id  x   y 10:1
-1   a  1 214   10
-2   b  2 215    9
-3   c  3 216    8
-4   d  4 217    7
-5   e  5 218    6
-6   f  6 219    5
-7   g 11  42    4
-8   g 11  42    3
-9   l 12 534    2
-10  m 13 -20    1
-
-~~~
 
 > #### Challenge 1 {.challenge}
 >
