@@ -41,9 +41,10 @@ packages we find useful, and have been chosen primarily for their usability.
 8.  [Control flow](08-control-flow.html)
 9.  [Split-apply-combine](09-plyr.html)
 
-[//]: # 13. [Wrapping up](13-wrap-up.html)
-
-
+<!---
+# 13. [Wrapping up](13-wrap-up.html)
+-->
+ 
 ## Other Resources
 
 *   [Reference](reference.html)
