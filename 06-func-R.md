@@ -16,11 +16,7 @@ minutes: 45
 > * Explain why we should divide programs into small, single-purpose functions.
 >
 
-If we only had one data set to analyze, it would probably be faster to load the
-file into a spreadsheet and use that to plot simple statistics. However, the
-gapminder data is updated periodically, and we may want to pull in that new
-information later and re-run our analysis again. We may also obtain similar data
-from a different source in the future.
+If we only had one data set to analyse, it would probably be faster to load the file into a spreadsheet and use that to plot simple statistics. However, the gapminder data is updated periodically, and we may want to pull in that new information later and re-run our analysis again. We may also obtain similar data from a different source in the future.
 
 In this lesson, we'll learn how to write a function so that we can repeat
 several operations with a single command.
@@ -28,7 +24,7 @@ several operations with a single command.
 
 ### Defining a function
 
-Let's open a new R script file in the `functions/` directory and call it functions-lesson.R.
+Let's create a new folder named `functions/`. Then open a new R script file and save it under the `functions/` directory with the name functions-lesson.R.
 
 
 ~~~{.r}
@@ -98,7 +94,7 @@ fahr_to_kelvin(212)
 > Write a function called `kelvin_to_celsius` that takes a temperature in Kelvin
 > and returns that temperature in Celsius
 >
-> Hint: To convert from Kelvin to Celsius you minus 273.15
+> Hint: To convert from Kelvin to Celsius you subtract 273.15
 >
 
 #### Combining functions
@@ -129,9 +125,7 @@ kelvin_to_celsius <- function(temp) {
 >
 
 
-We're going to define
-a function that calculates the Gross Domestic Product of a nation from the data
-available in our dataset:
+We're going to define a function that calculates the Gross Domestic Product of a nation from the data available in our dataset:
 
 
 ~~~{.r}
@@ -181,12 +175,9 @@ that per year and country.
 # Takes a dataset and multiplies the population column
 # with the GDP per capita column.
 calcGDP <- function(dat, year=NULL, country=NULL) {
-  if(!is.null(year)) {
-    dat <- dat[dat$year %in% year, ]
-  }
-  if (!is.null(country)) {
-    dat <- dat[dat$country %in% country,]
-  }
+    dat <- dat[dat$year == year, ]
+		dat <- dat[dat$country == country,]
+
   gdp <- dat$pop * dat$gdpPercap
 
   new <- cbind(dat, gdp=gdp)
@@ -204,15 +195,15 @@ source("functions/functions-lesson.R")
 ~~~
 
 Ok, so there's a lot going on in this function now. In plain English,
-the function now subsets the provided data by year if the year argument isn't
-empty, then subsets the result by country if the country argument isn't empty.
+the function now subsets the provided data by year and then subsets the result by country.
 Then it calculates the GDP for whatever subset emerges from the previous two steps.
 The function then adds the GDP as a new column to the subsetted data and returns
 this as the final result.
 You can see that the output is much more informative than just getting a vector of numbers.
 
-Let's take a look at what happens when we specify the year:
+Let's take a look at what happens when we call the calcGDP for Australia in 2007:
 
+<!---
 
 ~~~{.r}
 head(calcGDP(gapminder, year=2007))
@@ -264,7 +255,7 @@ Or both:
 calcGDP(gapminder, year=2007, country="Australia")
 ~~~
 
-
+-->
 
 ~~~{.output}
      country year      pop continent lifeExp gdpPercap          gdp
