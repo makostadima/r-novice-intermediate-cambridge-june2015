@@ -61,7 +61,7 @@ One of the most powerful and useful aspects of RStudio is the project management
 > 1. Click the "File" menu button, then "New Project".
 > 2. Click "New Directory".
 > 3. Click "Empty Project".
-> 4. Type in the name of the directory to store your project, e.g. "my_project".
+> 4. Type in the name of the directory to store your project, e.g. "test_project".
 > 5. Make sure that the checkbox for "Create a git repository" is selected.
 > 6. Click the "Create Project" button.
 >
@@ -192,7 +192,7 @@ between files from different commits.
 > 1. Modify the `.gitignore` file to contain `data/`
 > so that the data folder isn't versioned.
 >
-> 2. Stage and commit the .gitignore and <project name>.Rproj files using the
-> R git interface.
+> 2. Stage and commit the `.gitignore` and `test_project.Rproj` files using 
+> the R git interface.
 >
 >
