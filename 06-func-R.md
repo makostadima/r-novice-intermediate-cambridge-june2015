@@ -242,7 +242,7 @@ Error in eval(expr, envir, enclos): object 'temp' not found
 [chapter]: http://adv-r.had.co.nz/Environments.html
 [adv-r]: http://adv-r.had.co.nz/
 
-Why go to all this trouble? Well, here's a function called `span` that calculates the difference between the minimum and maximum values in an array:
+Why go to all this trouble? Well, here's a function called `span` that calculates the difference between the minimum and maximum values in a vector:
 
 
 ~~~{.r}
@@ -251,31 +251,30 @@ span <- function(a) {
   return(diff)
 }
 
-dat <- read.csv(file = "data/inflammation-01.csv", header = FALSE)
-# span of inflammation data
-span(dat)
+# span of years
+span(gapminder$year)
 ~~~
 
 
 
 ~~~{.output}
-[1] 20
+[1] 55
 
 ~~~
 
-Notice `span` assigns a value to variable called `diff`. We might very well use a variable with the same name (`diff`) to hold the inflammation data:
+Notice `span` assigns a value to variable called `diff`. We might very well use a variable with the same name (`diff`) to hold the gapminder data:
 
 
 ~~~{.r}
-diff <- read.csv(file = "data/inflammation-01.csv", header = FALSE)
-# span of inflammation data
-span(diff)
+diff <- read.csv(file = "data/gapminder-FiveYearData.csv", header = TRUE)
+# span of years
+span(diff$year)
 ~~~
 
 
 
 ~~~{.output}
-[1] 20
+[1] 55
 
 ~~~
 
@@ -341,12 +340,11 @@ center(z, 3)
 
 ~~~
 
-That looks right, so let's try center on our real data. We'll center the inflammation data from day 4 around 0:
+That looks right, so let's try center on our real data. We'll center the life expectancy of the population of Argentina around 0:
 
 
 ~~~{.r}
-dat <- read.csv(file = "data/inflammation-01.csv", header = FALSE)
-centered <- center(dat[, 4], 0)
+centered <- center(dat$lifeExp, 0)
 head(centered)
 ~~~
 
@@ -362,13 +360,13 @@ It's hard to tell from the default output whether the result is correct, but the
 
 ~~~{.r}
 # original min
-min(dat[, 4])
+min(dat$lifeExp)
 ~~~
 
 
 
 ~~~{.output}
-[1] 0
+[1] 62.485
 
 ~~~
 
@@ -376,13 +374,13 @@ min(dat[, 4])
 
 ~~~{.r}
 # original mean
-mean(dat[, 4])
+mean(dat$lifeExp)
 ~~~
 
 
 
 ~~~{.output}
-[1] 1.75
+[1] 69.06042
 
 ~~~
 
@@ -390,13 +388,13 @@ mean(dat[, 4])
 
 ~~~{.r}
 # original max
-max(dat[, 4])
+max(dat$lifeExp)
 ~~~
 
 
 
 ~~~{.output}
-[1] 3
+[1] 75.32
 
 ~~~
 
@@ -410,7 +408,7 @@ min(centered)
 
 
 ~~~{.output}
-[1] -1.75
+[1] -6.575417
 
 ~~~
 
@@ -424,7 +422,7 @@ mean(centered)
 
 
 ~~~{.output}
-[1] 0
+[1] -3.552714e-15
 
 ~~~
 
@@ -438,24 +436,22 @@ max(centered)
 
 
 ~~~{.output}
-[1] 1.25
+[1] 6.259583
 
 ~~~
 
-That seems almost right: the original mean was about 1.75, so the lower bound from zero is now about -1.75.
-The mean of the centered data is 0.
-We can even go further and check that the standard deviation hasn't changed:
+That seems almost right: the original mean was about 69.06042, so the lower bound from zero is now about -6.575417. The mean of the centered data is almost 0 (-3.552714e-15). We can even go further and check that the standard deviation hasn't changed:
 
 
 ~~~{.r}
 # original standard deviation
-sd(dat[, 4])
+sd(dat$lifeExp)
 ~~~
 
 
 
 ~~~{.output}
-[1] 1.067628
+[1] 4.18647
 
 ~~~
 
@@ -469,7 +465,7 @@ sd(centered)
 
 
 ~~~{.output}
-[1] 1.067628
+[1] 4.18647
 
 ~~~
 
@@ -479,7 +475,7 @@ Let's do this instead:
 
 ~~~{.r}
 # difference in standard deviations before and after
-sd(dat[, 4]) - sd(centered)
+sd(dat$lifeExp) - sd(centered)
 ~~~
 
 
@@ -494,7 +490,7 @@ R has a useful function for comparing two objects allowing for rounding errors, 
 
 
 ~~~{.r}
-all.equal(sd(dat[, 4]), sd(centered))
+all.equal(sd(dat$lifeExp), sd(centered))
 ~~~
 
 
@@ -539,14 +535,9 @@ center <- function(data, desired) {
 
 > ## Challenge - A more advanced function {.challenge}
 >
->  + Write a function called `analyze` that takes a filename as a argument and displays the three graphs produced in the [previous lesson][01] (average, min and max inflammation over time).
->  `analyze("data/inflammation-01.csv")` should produce the graphs already shown, while `analyze("data/inflammation-02.csv")` should produce corresponding graphs for the second data set. Be sure to document your function with comments.
->  + Write a function `rescale` that takes a vector as input and returns a corresponding vector of values scaled to lie in the range 0 to 1.
->  (If $L$ and $H$ are the lowest and highest values in the original vector, then the replacement for a value $v$ should be $(v-L) / (H-L)$.)
->  Be sure to document your function with comments.
->  + Test that your `rescale` function is working properly using `min`, `max`, and `plot`.
-
-[01]: 01-starting-with-data.html
+>  Write a function called `plot_population` that takes a filename and a country as arguments and displays the graph produced in the [previous lesson][05] (total population per year).
+>  `plot_population("data/gapminder-FiveYearData.csv, "Argentina")` should produce the graphs already shown, while `plot_population("data/gapminder-FiveYearData.csv, "Germany")` should produce corresponding graphs for Germany. Be sure to document your function with comments.
+[01]: 05-data-analysis.html
 
 
 
@@ -557,15 +548,15 @@ In fact, we can pass the arguments to `read.csv` without naming them:
 
 
 ~~~{.r}
-dat <- read.csv("data/inflammation-01.csv", FALSE)
+dat <- read.csv("data/gapminder-FiveYearData.csv", TRUE)
 ~~~
 
 However, the position of the arguments matters if they are not named.
 
 
 ~~~{.r}
-dat <- read.csv(header = FALSE, file = "data/inflammation-01.csv")
-dat <- read.csv(FALSE, "data/inflammation-01.csv")
+dat <- read.csv(header = TRUE, file = "data/gapminder-FiveYearData.csv")
+dat <- read.csv(TRUE, "data/gapminder-FiveYearData.csv")
 ~~~
 
 
@@ -751,7 +742,7 @@ Now we understand why the following gives an error:
 
 
 ~~~{.r}
-dat <- read.csv(FALSE, "data/inflammation-01.csv")
+dat <- read.csv(FALSE, "data/gapminder-FiveYearData.csv")
 ~~~
 
 
@@ -768,7 +759,7 @@ It fails because `FALSE` is assigned to `file` and the filename is assigned to t
 >  + Rewrite the `rescale` function so that it scales a vector to lie between 0 and 1 by default, but will allow the caller to specify lower and upper bounds if they want.
 >  Compare your implementation to your neighbor's: do the two functions always behave the same way?
 
-
+<!---
 
 > ## Key Points {.callout}
 >
@@ -797,3 +788,6 @@ It fails because `FALSE` is assigned to `file` and the filename is assigned to t
 >
 > but the chances of us typing all 12 filenames correctly aren't great, and we'll be even worse off if we get another hundred files.
 > What we need is a way to tell R to do something once for each file, and that will be the subject of the next lesson.
+
+
+-->
