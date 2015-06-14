@@ -34,26 +34,27 @@
 </div>
 <div class="panel-body">
 <ul>
-<li>To be able read R help files for functions and special operators.</li>
+<li>To know where to look for help.</li>
+<li>To become familiar with R help files for functions and special operators.</li>
 <li>To be able to use CRAN task views to identify packages to solve a problem.</li>
 <li>To be able to seek help from your peers</li>
 </ul>
 </div>
 </section>
 <h3 id="reading-help-files">Reading Help files</h3>
-<p>R, and every package, provide help files for functions. To search for help on a function from a specific function that is in a package loaded into your namespace (your interactive R session):</p>
+<p>R and add-on packages provide help files for functions. To load the help page for a specific function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?function_name
 <span class="kw">help</span>(function_name)</code></pre></div>
-<p>This will load up a help page in RStudio (or as plain text in R by itself).</p>
+<p>These functions will display the requested help page at the bottom left panel in RStudio (or as plain text in R).</p>
 <p>Each help page is broken down into sections:</p>
 <ul>
-<li>Description: An extended description of what the function does.</li>
-<li>Usage: The arguments of the function and their default values.</li>
-<li>Arguments: An explanation of the data each argument is expecting.</li>
-<li>Details: Any important details to be aware of.</li>
-<li>Value: The data the function returns.</li>
-<li>See Also: Any related functions you might find useful.</li>
-<li>Examples: Some examples for how to use the function.</li>
+<li>Description: an extended description of what the function does.</li>
+<li>Usage: the arguments of the function and their default values.</li>
+<li>Arguments: an explanation of the data each argument expects.</li>
+<li>Details: any important details to be aware of.</li>
+<li>Value: the data the function returns and in which type.</li>
+<li>See Also: any related functions you might find useful.</li>
+<li>Examples: some examples on how to use the function.</li>
 </ul>
 <p>Different functions might have different sections, but these are the main ones you should be aware of.</p>
 <aside class="callout panel panel-info">
@@ -61,7 +62,7 @@
 <h4 id="tip-reading-help-files"><span class="glyphicon glyphicon-pushpin"></span>Tip: Reading help files</h4>
 </div>
 <div class="panel-body">
-<p>One of the most daunting aspects of R is the large number of functions available. It would be prohibitive, if not impossible to remember the correct usage for every function you use. Luckily, the help files mean you don’t have to!</p>
+<p>One of the most daunting aspects of R is the large number of functions available. It is impossible to remember the correct usage for every function you use. Luckily, the help files mean you don’t have to!</p>
 </div>
 </aside>
 <h3 id="special-operators">Special Operators</h3>
@@ -79,22 +80,26 @@
 <p>If you’re having trouble using a function, 9 times out of 10, the answers you are seeking have already been answered on <a href="http://stackoverflow.com/">Stack Overflow</a>. You can search using the <code>[r]</code> tag.</p>
 <p>If you can’t find the answer, there are a few useful functions to help you ask a question from your peers:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?dput</code></pre></div>
-<p>Will dump the data you’re working with into a format so that it can be copy and pasted by anyone else into their R session.</p>
+<p>Will dump the data you’re working with into a format so that it can be copied and pasted by anyone else into their R session.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre class="output"><code>R version 3.1.0 (2014-04-10)
-Platform: x86_64-apple-darwin13.1.0 (64-bit)
+<pre class="output"><code>R version 3.2.0 (2015-04-16)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X 10.9.5 (Mavericks)
 
 locale:
-[1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+[1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets  base     
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[8] methods   base     
 
 other attached packages:
 [1] knitr_1.10.12
 
 loaded via a namespace (and not attached):
-[1] evaluate_0.7  formatR_1.0   stringr_0.6.2 tools_3.1.0  
+ [1] XML_3.98-1.2         digest_0.6.8         bitops_1.0-6        
+ [7] rmarkdown_0.7        tools_3.2.0          Biobase_2.28.0      
+[10] RCurl_1.95-4.6       yaml_2.1.13          htmltools_0.2.6     
 </code></pre>
 <p>Will print out your current version of R, as well as any packages you have loaded. This can be useful for others to help reproduce and debug your issue.</p>
 <section class="challenge panel panel-success">

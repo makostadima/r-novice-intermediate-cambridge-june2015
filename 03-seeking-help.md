@@ -10,16 +10,16 @@ minutes: 15
 
 > ## Learning objectives {.objectives}
 >
-> * To be able read R help files for functions and special operators.
+> * To know where to look for help.
+> * To become familiar with R help files for functions and special 
+operators.
 > * To be able to use CRAN task views to identify packages to solve a problem.
 > * To be able to seek help from your peers
 >
 
 ### Reading Help files
 
-R, and every package, provide help files for functions. To search for help on a
-function from a specific function that is in a package loaded into your
-namespace (your interactive R session):
+R and add-on packages provide help files for functions. To load the help page for a specific function:
 
 
 ~~~{.r}
@@ -27,24 +27,24 @@ namespace (your interactive R session):
 help(function_name)
 ~~~
 
-This will load up a help page in RStudio (or as plain text in R by itself).
+These functions will display the requested help page at the bottom left panel in RStudio (or as plain text in R).
 
 Each help page is broken down into sections:
 
- - Description: An extended description of what the function does.
- - Usage: The arguments of the function and their default values.
- - Arguments: An explanation of the data each argument is expecting.
- - Details: Any important details to be aware of.
- - Value: The data the function returns.
- - See Also: Any related functions you might find useful.
- - Examples: Some examples for how to use the function.
+ - Description: an extended description of what the function does.
+ - Usage: the arguments of the function and their default values.
+ - Arguments: an explanation of the data each argument expects.
+ - Details: any important details to be aware of.
+ - Value: the data the function returns and in which type.
+ - See Also: any related functions you might find useful.
+ - Examples: some examples on how to use the function.
 
 Different functions might have different sections, but these are the main ones you should be aware of.
 
 > #### Tip: Reading help files {.callout}
 >
 > One of the most daunting aspects of R is the large number of functions
-> available. It would be prohibitive, if not impossible to remember the
+> available. It is impossible to remember the
 > correct usage for every function you use. Luckily, the help files
 > mean you don't have to!
 >
@@ -100,7 +100,7 @@ help you ask a question from your peers:
 ~~~
 
 Will dump the data you're working with into a format so that it can
-be copy and pasted by anyone else into their R session.
+be copied and pasted by anyone else into their R session.
 
 
 ~~~{.r}
@@ -110,20 +110,24 @@ sessionInfo()
 
 
 ~~~{.output}
-R version 3.1.0 (2014-04-10)
-Platform: x86_64-apple-darwin13.1.0 (64-bit)
+R version 3.2.0 (2015-04-16)
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+Running under: OS X 10.9.5 (Mavericks)
 
 locale:
-[1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+[1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets  base     
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[8] methods   base     
 
 other attached packages:
 [1] knitr_1.10.12
 
 loaded via a namespace (and not attached):
-[1] evaluate_0.7  formatR_1.0   stringr_0.6.2 tools_3.1.0  
+ [1] XML_3.98-1.2         digest_0.6.8         bitops_1.0-6        
+ [7] rmarkdown_0.7        tools_3.2.0          Biobase_2.28.0      
+[10] RCurl_1.95-4.6       yaml_2.1.13          htmltools_0.2.6     
 
 ~~~
 
