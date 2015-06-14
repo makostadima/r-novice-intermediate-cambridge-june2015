@@ -12,7 +12,7 @@ minutes: 45
 >
 > - To become familiar with the different types of data
 > - To understand the different basic data structures commonly encountered in R
-> - To use R functions to extract the type, class, and structure of an R object.
+> - To use R built in functions to extract the type, class, and structure of an R object.
 >
 
 #### Data Types
@@ -489,13 +489,13 @@ while `length` will tell you the number of elements.
 >
 > #### Challenge 4 {.challenge}
 >
-> Make another matrix, this time containing the numbers 1:50,
+> Make another matrix, this time containing the numbers from 1 to 50,
 > with 5 columns and 10 rows.
 > Did the `matrix` function fill your matrix by column, or by
 > row, as its default behaviour?
-> See if you can figure out how to change this.
-> (hint: read the documentation for `matrix`!)
->
+> See if you can figure out how to change this by reading the 
+> documentation for [matrix](https://stat.ethz.ch/R-manual/R-devel/library/base/html/matrix.html) 
+> 
 
 #### Factors
 
