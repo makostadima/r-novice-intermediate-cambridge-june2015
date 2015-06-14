@@ -36,13 +36,12 @@
 <ul>
 <li>Read tabular data from a file into a program.</li>
 <li>Select individual values and subsections from data.</li>
-<li>Perform operations on a data frame of data.</li>
 <li>Display simple graphs.</li>
 </ul>
 </div>
 </section>
-<p>We are studying the changes in total population, life expectancy and gross national income per capita (US $ by exchange rate) for 142 countries over a period of 55 years with measurements taken every 5 year, from 1952 to 2207. The data sets are stored in <a href="reference.html#comma-separated-values-(csv)">comma-separated values</a> (CSV) format. Each row holds the observations for a country at one time point. The columns hold the following information: country, year, total population, continent, life expectancy and gross national income per capita. For more information visit the <a href="http://www.gapminder.org/data/documentation/">Gapminder website</a>.</p>
-<p>The first few rows of our first file look like this:</p>
+<p>We are studying the changes in total population, life expectancy and gross national income per capita (US $ by exchange rate) for 142 countries over a period of 55 years with measurements taken every 5 year, from 1952 to 2007. The data sets are stored in <a href="reference.html#comma-separated-values-(csv)">comma-separated values</a> (CSV) format. Each row holds the observations for a country at one time point. The columns hold the following information: country, year, total population, continent, life expectancy and gross national income per capita. For more information visit the <a href="http://www.gapminder.org/data/documentation/">Gapminder website</a>.</p>
+<p>The first few rows of our file look like this:</p>
 <pre class="output"><code>country,year,pop,continent,lifeExp,gdpPercap
 Afghanistan,1952,8425333,Asia,28.801,779.4453145
 Afghanistan,1957,9240934,Asia,30.332,820.8530296
@@ -57,8 +56,8 @@ Afghanistan,1992,16317921,Asia,41.674,649.3413952
 <p>We want to:</p>
 <ul>
 <li>Load data into memory,</li>
-<li>Calculate the average value of total population per year across all countries, and</li>
-<li>Plot the results.</li>
+<li>Find the country with the highest gross national income per capita, and</li>
+<li>Plot the total population of Argentina over the years.</li>
 </ul>
 <h3 id="loading-data">Loading Data</h3>
 <p>To load our gapminder data, first we need to tell our computer where is the file that contains the values. We know its name is <code>gapminder-FiveYearData.csv</code>. This is very important in R, if we forget this step we’ll get an error message when trying to read. We can change the current working directory using the function <code>setwd</code>. For this example, we change the path to the working directory where our project is stored that is named <code>test_project</code>:</p>
@@ -85,7 +84,7 @@ Afghanistan,1992,16317921,Asia,41.674,649.3413952
 <h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
 </div>
 <div class="panel-body">
-<p>Go to file -&gt; new file -&gt; R script, and write an R script to read the gapminder dataset and assign it to a variable named <code>gapminder</code> .</p>
+<p>Go to File -&gt; New File -&gt; R Script, and write a R script to read the gapminder dataset and assign it to a variable named <code>gapminder</code> .</p>
 <p>Create a new folder in your project named <code>scripts/</code>, store the R script under it and add it to version control.</p>
 <p>Run the script using the <code>source</code> function, using the file path as its argument (or by pressing the “source” button in RStudio).</p>
 <p>What is the data structure of <code>gapminder</code>? (hint: use function <code>class</code>)</p>

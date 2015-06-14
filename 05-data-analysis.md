@@ -10,12 +10,11 @@ minutes: 45
 > ## Learning Objectives {.objectives}
 > * Read tabular data from a file into a program.
 > * Select individual values and subsections from data.
-> * Perform operations on a data frame of data.
 > * Display simple graphs.
 
-We are studying the changes in total population, life expectancy and gross national income per capita (US $ by exchange rate) for 142 countries over a period of 55 years with measurements taken every 5 year, from 1952 to 2207. The data sets are stored in [comma-separated values](reference.html#comma-separated-values-(csv)) (CSV) format. Each row holds the observations for a country at one time point. The columns hold the following information: country, year, total population, continent,  life expectancy and gross national income per capita. For more information visit the [Gapminder website](http://www.gapminder.org/data/documentation/).
+We are studying the changes in total population, life expectancy and gross national income per capita (US $ by exchange rate) for 142 countries over a period of 55 years with measurements taken every 5 year, from 1952 to 2007. The data sets are stored in [comma-separated values](reference.html#comma-separated-values-(csv)) (CSV) format. Each row holds the observations for a country at one time point. The columns hold the following information: country, year, total population, continent,  life expectancy and gross national income per capita. For more information visit the [Gapminder website](http://www.gapminder.org/data/documentation/).
 
-The first few rows of our first file look like this:
+The first few rows of our file look like this:
 
 
 ~~~{.output}
@@ -36,8 +35,8 @@ Afghanistan,1992,16317921,Asia,41.674,649.3413952
 We want to:
 
 * Load data into memory,
-* Calculate the average value of total population per year across all countries, and
-* Plot the results.
+* Find the country with the highest gross national income per capita, and
+* Plot the total population of Argentina over the years.
 
 ### Loading Data
 
@@ -83,7 +82,7 @@ Since we didn't tell it to do anything else with the function's output, the cons
 
 > #### Challenge 1 {.challenge}
 >
-> Go to file -> new file -> R script, and write an R script to
+> Go to File -> New File -> R Script, and write a R script to
 > read the gapminder dataset and assign it to a variable named `gapminder` . 
 > 
 > Create a new folder in your project named `scripts/`, store the R script
