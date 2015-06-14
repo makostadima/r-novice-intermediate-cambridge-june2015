@@ -44,8 +44,10 @@ packages we find useful, and have been chosen primarily for their usability.
 <!---
 # 13. [Wrapping up](13-wrap-up.html)
 -->
- 
+
 ## Other Resources
 
 *   [Reference](reference.html)
+*   [Discussion](discussion.html)
 *   [Instructor's Guide](instructors.html)
+ 
