@@ -36,7 +36,7 @@ packages we find useful, and have been chosen primarily for their usability.
 3.  [Seeking help](03-seeking-help.html)
 4.  [Project Management](04-project-intro.html)
 5.  [Data Analysis: using data frames](05-data-analysis.html)
-6.  [Functions](06-functions.html)
+6.  [Functions](06-func-R.html)
 7.  [Vectorisation](07-vectorisation.html)
 8.  [Control flow](08-control-flow.html)
 9.  [Split-apply-combine](09-plyr.html)
