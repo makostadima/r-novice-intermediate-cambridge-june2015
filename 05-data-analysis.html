@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: R for reproducible scientific analysis</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">R for reproducible scientific analysis</h1></a>
+          <h2 class="subtitle">Data frames and reading in data</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>Read tabular data from a file into a program.</li>
+<li>Select individual values and subsections from data.</li>
+<li>Perform operations on a data frame of data.</li>
+<li>Display simple graphs.</li>
+</ul>
+</div>
+</section>
+<p>We are studying the changes in total population, life expectancy and gross national income per capita (US $ by exchange rate) for 142 countries over a period of 55 years with measurements taken every 5 year, from 1952 to 2207. The data sets are stored in <a href="reference.html#comma-separated-values-(csv)">comma-separated values</a> (CSV) format. Each row holds the observations for a country at one time point. The columns hold the following information: country, year, total population, continent, life expectancy and gross national income per capita. For more information visit the <a href="http://www.gapminder.org/data/documentation/">Gapminder website</a>.</p>
+<p>The first few rows of our first file look like this:</p>
+<pre class="output"><code>country,year,pop,continent,lifeExp,gdpPercap
+Afghanistan,1952,8425333,Asia,28.801,779.4453145
+Afghanistan,1957,9240934,Asia,30.332,820.8530296
+Afghanistan,1962,10267083,Asia,31.997,853.10071
+Afghanistan,1967,11537966,Asia,34.02,836.1971382
+Afghanistan,1972,13079460,Asia,36.088,739.9811058
+Afghanistan,1977,14880372,Asia,38.438,786.11336
+Afghanistan,1982,12881816,Asia,39.854,978.0114388
+Afghanistan,1987,13867957,Asia,40.822,852.3959448
+Afghanistan,1992,16317921,Asia,41.674,649.3413952
+</code></pre>
+<p>We want to:</p>
+<ul>
+<li>Load data into memory,</li>
+<li>Calculate the average value of total population per year across all countries, and</li>
+<li>Plot the results.</li>
+</ul>
+<h3 id="loading-data">Loading Data</h3>
+<p>To load our gapminder data, first we need to tell our computer where is the file that contains the values. We know its name is <code>gapminder-FiveYearData.csv</code>. This is very important in R, if we forget this step we’ll get an error message when trying to read. We can change the current working directory using the function <code>setwd</code>. For this example, we change the path to the working directory where our project is stored that is named <code>test_project</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;~/test_project&quot;</span>)</code></pre></div>
+<p>Alternatively you can change the working directory using the RStudio GUI using the menu option <code>Session</code> -&gt; <code>Set Working Directory</code> -&gt; <code>Choose Directory...</code></p>
+<p>We also know that experimental files are located in the directory <code>data</code> inside the working directory. Now we can load the data into R using <code>read.csv</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&quot;data/gapminder-FiveYearData.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>The expression <code>read.csv(...)</code> is a <a href="reference.html#function-call">function call</a> that asks R to run the function <code>read.csv</code>.</p>
+<p><code>read.csv</code> has two <a href="reference.html#argument">arguments</a>: the name of the file we want to read, and whether the first line of the file contains names for the columns of data. The filename needs to be a character string (or <a href="reference.html#string">string</a> for short), so we put it in quotes. Assigning the second argument, <code>header</code>, to be <code>TRUE</code> indicates that the data file has column headers.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2 id="tip"><span class="glyphicon glyphicon-pushpin"></span>Tip</h2>
+</div>
+<div class="panel-body">
+<p><code>read.csv</code> is a fairly thin wrapper around <code>read.table</code>, a more general R function to read data. <code>read.csv</code> is a function specific for comma separated data.</p>
+<p>Another file format you might encounter is the tab-separated. To read such files, use <code>read.delim</code> and specify a tab as a separator using <code>sep=&quot;\t&quot;</code>.</p>
+<p>You can also read in files from the Internet by replacing the file paths with a web address.</p>
+<p>Finally, you can also read directly from excel spreadsheets without converting them to plain text first by using the <code>xlsx</code> package.</p>
+</div>
+</aside>
+<p>Since we didn’t tell it to do anything else with the function’s output, the console will display the full contents of the file <code>gapminder-FiveYearData.csv</code>.</p>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+</div>
+<div class="panel-body">
+<p>Go to file -&gt; new file -&gt; R script, and write an R script to read the gapminder dataset and assign it to a variable named <code>gapminder</code> .</p>
+<p>Create a new folder in your project named <code>scripts/</code>, store the R script under it and add it to version control.</p>
+<p>Run the script using the <code>source</code> function, using the file path as its argument (or by pressing the “source” button in RStudio).</p>
+<p>What is the data structure of <code>gapminder</code>? (hint: use function <code>class</code>)</p>
+</div>
+</section>
+<p>Data frames are similar to matrices, except each column can be a different atomic type. Underneath the hood, data frames are really lists, where each element is an atomic vector, with the added restriction that they’re all the same length. Data frames are very useful for storing data and you will find them elsewhere when programming in R. A typical data frame of experimental data contains individual observations in rows and variables in columns.</p>
+<p>We can see the dimensions, or <a href="reference.html#shape-(of-an-array)">shape</a>, of the data frame with the function <code>dim</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(gapminder)</code></pre></div>
+<pre class="output"><code>[1] 1705    6
+</code></pre>
+<p>This tells us that our data frame, <code>dat</code>, has 1705 rows and 6 columns. Alternatively, you can see the number of rows and columns using the functions <code>nrow</code> and <code>ncol</code>, respectively.</p>
+<h3 id="slicing-data-using-indices">Slicing data using indices</h3>
+<p>If we want to get a single value from the data frame, we can provide an <a href="reference.html#index">index</a> in square brackets, just as we do in math:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first value in dat</span>
+gapminder[<span class="dv">1</span>, <span class="dv">1</span>]</code></pre></div>
+<pre class="output"><code>[1] Afghanistan
+142 Levels: Afghanistan Albania Algeria Angola Argentina Australia ... Zimbabwe
+</code></pre>
+<p>R automatically stored this first column as a factor, not a character vector. We can change this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder$country &lt;-<span class="st"> </span><span class="kw">as.character</span>(gapminder$country)
+<span class="kw">class</span>(gapminder$country)</code></pre></div>
+<pre class="output"><code>[1] &quot;character&quot;
+</code></pre>
+<p>An index like <code>[1, 1]</code> selects a single element of a data frame, but we can select whole sections as well. For example, we can select the first five measurements (rows) like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder[<span class="dv">1</span>:<span class="dv">5</span>, ]</code></pre></div>
+<pre class="output"><code>      country year      pop continent lifeExp gdpPercap
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+4 Afghanistan 1967 11537966      Asia  34.020  836.1971
+5 Afghanistan 1972 13079460      Asia  36.088  739.9811</code></pre>
+<p>The <a href="reference.html#slice">slice</a> <code>1:5</code> means, “Start at index 1 and go to index 5”. To select all the columns you simply don’t include a slice for the those and R returns them all. If we don’t provide a slice for either rows or columns, e.g. <code>dat[, ]</code>, R returns the full data frame.</p>
+<p>The slice does not need to start at 1, e.g. the line below selects rows 5 through 10:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder[<span class="dv">5</span>:<span class="dv">10</span>, ]</code></pre></div>
+<p>We can use the function <code>c</code> to select non-contiguous values using both indices(for the rows) and names (for the columns):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">37</span>, <span class="dv">56</span>), <span class="kw">c</span>(<span class="st">&quot;country&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;pop&quot;</span>)]</code></pre></div>
+<pre class="output"><code>       country year      pop
+3  Afghanistan 1962 10267083
+8  Afghanistan 1987 13867957
+37      Angola 1952  4232095
+56   Argentina 1987 31620918
+</code></pre>
+<h3 id="conditional-slicing-of-data">Conditional slicing of data</h3>
+<p>To extract all the measurements for <em>Argentina</em>, we use conditional slicing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder[gapminder$country ==<span class="st"> &quot;Argentina&quot;</span>, ]</code></pre></div>
+<pre class="output"><code>     country year      pop continent lifeExp gdpPercap
+49 Argentina 1952 17876956  Americas  62.485  5911.315
+50 Argentina 1957 19610538  Americas  64.399  6856.856
+51 Argentina 1962 21283783  Americas  65.142  7133.166
+52 Argentina 1967 22934225  Americas  65.634  8052.953
+53 Argentina 1972 24779799  Americas  67.065  9443.039
+54 Argentina 1977 26983828  Americas  68.481 10079.027
+55 Argentina 1982 29341374  Americas  69.942  8997.897
+56 Argentina 1987 31620918  Americas  70.774  9139.671
+57 Argentina 1992 33958947  Americas  71.868  9308.419
+58 Argentina 1997 36203463  Americas  73.275 10967.282
+59 Argentina 2002 38331121  Americas  74.340  8797.641
+60 Argentina 2007 40301927  Americas  75.320 12779.380
+</code></pre>
+<p>The condition operator is applied to every element of <code>country</code> column of the <code>gapminder</code> data frame, only to return those rows of <code>gapminder</code> for which the country is “Argentina”.</p>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-2"><span class="glyphicon glyphicon-pencil"></span>Challenge 2</h4>
+</div>
+<div class="panel-body">
+<p>Find which country(-ies) had the highest <code>gdpPercap</code> throughout all years.</p>
+<p>Discuss with your neighbors. Have you come up with the same answer? Have you &gt; used the same command(s)?</p>
+</div>
+</section>
+<h3 id="plotting">Plotting</h3>
+<p>The mathematician Richard Hamming once said, “The purpose of computing is insight, not numbers,” and the best way to develop insight is often to visualize data. Visualisation deserves an entire lecture (or course) of its own, but we can explore a few of R’s plotting features.</p>
+<p>Let’s take a look at the population of Argentina over time. Plotting the values is done with the function <code>plot</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>gapminder[gapminder$country==<span class="st">&quot;Argentina&quot;</span>, ]
+<span class="kw">plot</span>(dat$year, dat$pop)</code></pre></div>
+<p><img src="fig/01-data-analysis-plot-argentina-pop-per-year.png" title="plot of Argentina's population over the years" alt="plot of Argentina's population over the years" style="display: block; margin: auto;" /></p>
+<p>Above, we gave the function <code>plot</code> a vector of numbers corresponding to the population of Argentina over the years and the years. <code>plot</code> created a scatter plot where the y-axis is the population and the x-axis are the years.</p>
+<!---
+## Challenge Solutions
+
+> #### Solution to challenge 1 {.challenge}
+>
+> Create a data frame that holds the following information for yourself:
+>
+> * First name
+> * Last name
+> * Age
+>
+> Then use rbind to add the same information for the people sitting near you.
+>
+> Now use cbind to add a column of logicals answering the question,
+> "Is there anything in this workshop you're finding confusing?"
+>
+> 
+> ~~~{.r}
+> my_df <- data.frame(first_name = "Software", last_name = "Carpentry", age = 17)
+> my_df <- rbind(my_df, list("Jane", "Smith", 29))
+> my_df <- rbind(my_df, list(c("Jo", "John"), c("White", "Lee"), c(23, 41)))
+> my_df <- cbind(my_df, confused = c(FALSE, FALSE, TRUE, FALSE))
+> ~~~
+>
+
+-->
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
