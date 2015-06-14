@@ -48,6 +48,12 @@ packages we find useful, and have been chosen primarily for their usability.
 ## Other Resources
 
 *   [Reference](reference.html)
+
+<!---
+
 *   [Discussion](discussion.html)
 *   [Instructor's Guide](instructors.html)
+
+-->
+
  
