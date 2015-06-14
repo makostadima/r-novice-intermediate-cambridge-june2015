@@ -121,48 +121,85 @@ calcGDP &lt;-<span class="st"> </span>function(dat) {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Takes a dataset and multiplies the population column</span>
 <span class="co"># with the GDP per capita column.</span>
 calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span><span class="ot">NULL</span>, <span class="dt">country=</span><span class="ot">NULL</span>) {
-    dat &lt;-<span class="st"> </span>dat[dat$year ==<span class="st"> </span>year, ]
-        dat &lt;-<span class="st"> </span>dat[dat$country ==<span class="st"> </span>country,]
+  dat &lt;-<span class="st"> </span>dat[dat$year ==<span class="st"> </span>year, ]
+    dat &lt;-<span class="st"> </span>dat[dat$country ==<span class="st"> </span>country,]
 
   gdp &lt;-<span class="st"> </span>dat$pop *<span class="st"> </span>dat$gdpPercap
 
   new &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">gdp=</span>gdp)
   <span class="kw">return</span>(new)
 }</code></pre></div>
-<p>If you’ve been writing these functions down into a separate R script (a good idea!), you can load in the functions into our R session by using the <code>source</code> function:</p>
+<p>Here we’ve added two arguments, <code>year</code>, and <code>country</code>. We’ve set <em>default arguments</em> for both as <code>NULL</code> using the <code>=</code> operator in the function definition. This means that those arguments will take on those values unless the user specifies otherwise.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h4 id="tip-printing-numbers"><span class="glyphicon glyphicon-pushpin"></span>Tip: printing numbers</h4>
+</div>
+<div class="panel-body">
+<p>If you’ve been writing these functions down into a separate R script (a good idea!), you can load in the functions into our R session by using the<code>source</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;functions/functions-lesson.R&quot;</span>)</code></pre></div>
-<p>Ok, so there’s a lot going on in this function now. In plain English, the function now subsets the provided data by year and then subsets the result by country. Then it calculates the GDP for whatever subset emerges from the previous two steps. The function then adds the GDP as a new column to the subsetted data and returns this as the final result. You can see that the output is much more informative than just getting a vector of numbers.</p>
+</div>
+</aside>
 <p>Let’s take a look at what happens when we call the calcGDP for Australia in 2007:</p>
-<!---
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">calcGDP</span>(gapminder, <span class="dt">year=</span><span class="dv">2007</span>, <span class="dt">country=</span><span class="st">&quot;Australia&quot;</span>))</code></pre></div>
+<pre class="output"><code>     country year      pop continent lifeExp gdpPercap          gdp
+72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894</code></pre>
+<p>Much better, but our function is still not general enough. What if we only want to specify the country:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">country=</span><span class="st">&quot;Australia&quot;</span>)</code></pre></div>
+<pre class="output"><code>[1] country   year      pop       continent lifeExp   gdpPercap gdp      
+&lt;0 rows&gt; (or 0-length row.names)
+</code></pre>
+<p>It doesn’t return any output. Why?</p>
+<p>The <code>year</code> and <code>country</code> arguments of our function <code>calcGDP</code> are by default set to <code>NULL</code>. But within the function body we slice the <code>dat</code> data frame based on these values. So when these are set to NULL the slicing returns:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year&lt;-<span class="ot">NULL</span>
+gapminder[gapminder$year ==<span class="st"> </span>year, ]</code></pre></div>
+<pre class="output"><code>[1] country   year      pop       continent lifeExp   gdpPercap gdp      
+&lt;0 rows&gt; (or 0-length row.names)
+</code></pre>
+<p>To update our function to decide when to slice the data frame or not, R gives us a tool called a conditional statement, and looks like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num &lt;-<span class="st"> </span><span class="dv">37</span>
+if (num &gt;<span class="st"> </span><span class="dv">100</span>) {
+  <span class="kw">print</span>(<span class="st">&quot;greater&quot;</span>)
+} else {
+  <span class="kw">print</span>(<span class="st">&quot;not greater&quot;</span>)
+}</code></pre></div>
+<pre class="output"><code>[1] &quot;not greater&quot;
+ </code></pre>
+<p>In our case we want to check whether the arguments <code>year</code> and <code>country</code> are not NULL. To do so we will use a built in function called <code>is.null</code> and the special operator <code>!</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year &lt;-<span class="st"> </span><span class="ot">NULL</span>
+if (!<span class="kw">is.null</span>(year)) {
+  <span class="kw">print</span>(<span class="st">&quot;year is defined&quot;</span>)
+} else {
+  <span class="kw">print</span>(<span class="st">&quot;year is NULL&quot;</span>)
+}</code></pre></div>
+<pre class="output"><code>[1] &quot;not greater&quot;
+ </code></pre>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-1-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+</div>
+<div class="panel-body">
+<p>Modify the <code>calcGDP</code> function to check whether each additional argument is set to <code>null</code>. Whenever they’re not <code>null</code> overwrite the dataset stored in <code>dat</code> with a subset given by the non-<code>null</code> argument.</p>
+</div>
+</section>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Takes a dataset and multiplies the population column</span>
+<span class="co"># with the GDP per capita column.</span>
+calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span><span class="ot">NULL</span>, <span class="dt">country=</span><span class="ot">NULL</span>) {
+    if(!<span class="kw">is.null</span>(year)){
+        dat &lt;-<span class="st"> </span>dat[dat$year ==<span class="st"> </span>year, ]
+    }
+    if(!<span class="kw">is.null</span>(country))
+    {
+      dat &lt;-<span class="st"> </span>dat[dat$country ==<span class="st"> </span>country,]
+    }
 
-~~~{.r}
-head(calcGDP(gapminder, year=2007))
-~~~
+  gdp &lt;-<span class="st"> </span>dat$pop *<span class="st"> </span>dat$gdpPercap
 
-
-
-~~~{.output}
-       country year      pop continent lifeExp  gdpPercap          gdp
-12 Afghanistan 2007 31889923      Asia  43.828   974.5803  31079291949
-24     Albania 2007  3600523    Europe  76.423  5937.0295  21376411360
-36     Algeria 2007 33333216    Africa  72.301  6223.3675 207444851958
-48      Angola 2007 12420476    Africa  42.731  4797.2313  59583895818
-60   Argentina 2007 40301927  Americas  75.320 12779.3796 515033625357
-72   Australia 2007 20434176   Oceania  81.235 34435.3674 703658358894
-
-~~~
-
-Or for a specific country:
-
-
-~~~{.r}
-calcGDP(gapminder, country="Australia")
-~~~
-
-
-
-~~~{.output}
-     country year      pop continent lifeExp gdpPercap          gdp
+  new &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">gdp=</span>gdp)
+  <span class="kw">return</span>(new)
+}</code></pre></div>
+<p>Now when calling the <code>calcGDP</code> function specifying only the country:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">country=</span><span class="st">&quot;Australia&quot;</span>)</code></pre></div>
+<pre class="output"><code>     country year      pop continent lifeExp gdpPercap          gdp
 61 Australia 1952  8691212   Oceania  69.120  10039.60  87256254102
 62 Australia 1957  9712569   Oceania  70.330  10949.65 106349227169
 63 Australia 1962 10794968   Oceania  70.930  12217.23 131884573002
@@ -175,38 +212,33 @@ calcGDP(gapminder, country="Australia")
 70 Australia 1997 18565243   Oceania  78.830  26997.94 501223252921
 71 Australia 2002 19546792   Oceania  80.370  30687.75 599847158654
 72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
-
-~~~
-
-Or both:
-
-
-~~~{.r}
-calcGDP(gapminder, year=2007, country="Australia")
-~~~
-
--->
-<pre class="output"><code>     country year      pop continent lifeExp gdpPercap          gdp
-72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
-</code></pre>
-<p>Let’s walk through the body of the function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span><span class="ot">NULL</span>, <span class="dt">country=</span><span class="ot">NULL</span>) {</code></pre></div>
-<p>Here we’ve added two arguments, <code>year</code>, and <code>country</code>. We’ve set <em>default arguments</em> for both as <code>NULL</code> using the <code>=</code> operator in the function definition. This means that those arguments will take on those values unless the user specifies otherwise.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  if(!<span class="kw">is.null</span>(year)) {
-    dat &lt;-<span class="st"> </span>dat[dat$year %in%<span class="st"> </span>year, ]
-  }
-  if (!<span class="kw">is.null</span>(country)) {
-    dat &lt;-<span class="st"> </span>dat[dat$country %in%<span class="st"> </span>country,]
-  }</code></pre></div>
-<p>Here, we check whether each additional argument is set to <code>null</code>, and whenever they’re not <code>null</code> overwrite the dataset stored in <code>dat</code> with a subset given by the non-<code>null</code> argument.</p>
-<p>I did this so that our function is more flexible for later. We can ask it to calculate the GDP for:</p>
+ </code></pre>
+<p>We did this so that our function is more flexible for later. We can ask it to calculate the GDP for:</p>
 <ul>
 <li>The whole dataset;</li>
 <li>A single year;</li>
 <li>A single country;</li>
 <li>A single combination of year and country.</li>
 </ul>
-<p>By using <code>%in%</code> instead, we can also give multiple years or countries to those arguments.</p>
+<p>By using another speecial operator, <code>%in%</code> instead of <code>==</code> for the conditional splicing of the dataframe, we can also give multiple years or countries to those arguments. So the function becomes general enough:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Takes a dataset and multiplies the population column</span>
+<span class="co"># with the GDP per capita column.</span>
+calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span><span class="ot">NULL</span>, <span class="dt">country=</span><span class="ot">NULL</span>) {
+    if(!<span class="kw">is.null</span>(year)){
+        dat &lt;-<span class="st"> </span>dat[dat$year %in%<span class="st"> </span>year, ]
+    }
+    if(!<span class="kw">is.null</span>(country))
+    {
+      dat &lt;-<span class="st"> </span>dat[dat$country %in%<span class="st"> </span>country,]
+    }
+
+  gdp &lt;-<span class="st"> </span>dat$pop *<span class="st"> </span>dat$gdpPercap
+
+  new &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">gdp=</span>gdp)
+  <span class="kw">return</span>(new)
+}</code></pre></div>
+<p>Now when calling the <code>calcGDP</code> function specifying two countries and a year:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">year=</span><span class="dv">2007</span>, <span class="dt">country=</span><span class="kw">c</span>(<span class="st">&quot;Argentina&quot;</span>, <span class="st">&quot;Australia&quot;</span>))</code></pre></div>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
 <h4 id="tip-pass-by-value"><span class="glyphicon glyphicon-pushpin"></span>Tip: Pass by value</h4>
@@ -271,49 +303,66 @@ calcGDP(gapminder, year=2007, country="Australia")
 <p>Formal automated tests can be written using the <a href="http://r-pkgs.had.co.nz/tests.html">testthat</a> package.</p>
 </div>
 </aside>
-<h2 id="challenge-solutions">Challenge solutions</h2>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="solution-to-challenge-1"><span class="glyphicon glyphicon-pencil"></span>Solution to challenge 1</h4>
-</div>
-<div class="panel-body">
-<p>Write a function called <code>kelvin_to_celsius</code> that takes a temperature in Kelvin and returns that temperature in Celsius</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kelvin_to_celsius &lt;-<span class="st"> </span>function(temp) {
- celsius &lt;-<span class="st"> </span>temp -<span class="st"> </span><span class="fl">273.15</span>
- <span class="kw">return</span>(celsius)
-}</code></pre></div>
-</div>
-</section>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="solution-to-challenge-2"><span class="glyphicon glyphicon-pencil"></span>Solution to challenge 2</h4>
-</div>
-<div class="panel-body">
-<p>Define the function to convert directly from Fahrenheit to Celsius, by reusing these two functions above</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_celsius &lt;-<span class="st"> </span>function(temp) {
-  temp_k &lt;-<span class="st"> </span><span class="kw">fahr_to_kelvin</span>(temp)
-  result &lt;-<span class="st"> </span><span class="kw">kelvin_to_celsius</span>(temp_k)
-  <span class="kw">return</span>(result)
-}</code></pre></div>
-</div>
-</section>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="solution-to-challenge-3"><span class="glyphicon glyphicon-pencil"></span>Solution to challenge 3</h4>
-</div>
-<div class="panel-body">
-<p>Write a function called <code>fence</code> that takes two vectors as arguments, called <code>text</code> and <code>wrapper</code>, and prints out the text wrapped with the <code>wrapper</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fence &lt;-<span class="st"> </span>function(text, wrapper){
-  text &lt;-<span class="st"> </span><span class="kw">c</span>(wrapper, text, wrapper)
-  result &lt;-<span class="st"> </span><span class="kw">paste</span>(text, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
-  <span class="kw">return</span>(result)
-}
-best_practice &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Write&quot;</span>, <span class="st">&quot;programs&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;people&quot;</span>, <span class="st">&quot;not&quot;</span>, <span class="st">&quot;computers&quot;</span>)
-<span class="kw">fence</span>(<span class="dt">text=</span>best_practice, <span class="dt">wrapper=</span><span class="st">&quot;***&quot;</span>)</code></pre></div>
-<pre class="output"><code>[1] &quot;*** Write programs for people not computers ***&quot;
-</code></pre>
-</div>
-</section>
+<!---
+
+## Challenge solutions
+
+> #### Solution to challenge 1 {.challenge}
+>
+> Write a function called `kelvin_to_celsius` that takes a temperature in Kelvin
+> and returns that temperature in Celsius
+>
+> 
+> ~~~{.r}
+> kelvin_to_celsius <- function(temp) {
+>  celsius <- temp - 273.15
+>  return(celsius)
+> }
+> ~~~
+
+
+> #### Solution to challenge 2 {.challenge}
+>
+> Define the function to convert directly from Fahrenheit to Celsius,
+> by reusing these two functions above
+>
+>
+> 
+> ~~~{.r}
+> fahr_to_celsius <- function(temp) {
+>   temp_k <- fahr_to_kelvin(temp)
+>   result <- kelvin_to_celsius(temp_k)
+>   return(result)
+> }
+> ~~~
+>
+
+> #### Solution to challenge 3 {.challenge}
+> 
+>
+>  Write a function called `fence` that takes two vectors as arguments, called
+> `text` and `wrapper`, and prints out the text wrapped with the `wrapper`:
+>
+> 
+> ~~~{.r}
+> fence <- function(text, wrapper){
+>   text <- c(wrapper, text, wrapper)
+>   result <- paste(text, collapse = " ")
+>   return(result)
+> }
+> best_practice <- c("Write", "programs", "for", "people", "not", "computers")
+> fence(text=best_practice, wrapper="***")
+> ~~~
+> 
+> 
+> 
+> ~~~{.output}
+> [1] "*** Write programs for people not computers ***"
+> 
+> ~~~
+> 
+
+-->
         </div>
       </div>
       </article>

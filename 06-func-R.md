@@ -175,8 +175,8 @@ that per year and country.
 # Takes a dataset and multiplies the population column
 # with the GDP per capita column.
 calcGDP <- function(dat, year=NULL, country=NULL) {
-    dat <- dat[dat$year == year, ]
-		dat <- dat[dat$country == country,]
+  dat <- dat[dat$year == year, ]
+	dat <- dat[dat$country == country,]
 
   gdp <- dat$pop * dat$gdpPercap
 
@@ -185,44 +185,39 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
 }
 ~~~
 
-If you've been writing these functions down into a separate R script
-(a good idea!), you can load in the functions into our R session by using the
-`source` function:
+Here we've added two arguments, `year`, and `country`. We've set
+*default arguments* for both as `NULL` using the `=` operator
+in the function definition. This means that those arguments will
+take on those values unless the user specifies otherwise.
 
 
-~~~{.r}
-source("functions/functions-lesson.R")
-~~~
+> #### Tip: printing numbers {.callout}
+>
+> If you've been writing these functions down into a separate R script
+> (a good idea!), you can load in the functions into our R session by using 
+> the`source` function:
+>
+> ~~~{.r}
+> source("functions/functions-lesson.R")
+> ~~~
+>
 
-Ok, so there's a lot going on in this function now. In plain English,
-the function now subsets the provided data by year and then subsets the result by country.
-Then it calculates the GDP for whatever subset emerges from the previous two steps.
-The function then adds the GDP as a new column to the subsetted data and returns
-this as the final result.
-You can see that the output is much more informative than just getting a vector of numbers.
 
 Let's take a look at what happens when we call the calcGDP for Australia in 2007:
 
-<!---
 
 ~~~{.r}
-head(calcGDP(gapminder, year=2007))
+head(calcGDP(gapminder, year=2007, country="Australia"))
 ~~~
 
 
 
 ~~~{.output}
-       country year      pop continent lifeExp  gdpPercap          gdp
-12 Afghanistan 2007 31889923      Asia  43.828   974.5803  31079291949
-24     Albania 2007  3600523    Europe  76.423  5937.0295  21376411360
-36     Algeria 2007 33333216    Africa  72.301  6223.3675 207444851958
-48      Angola 2007 12420476    Africa  42.731  4797.2313  59583895818
-60   Argentina 2007 40301927  Americas  75.320 12779.3796 515033625357
-72   Australia 2007 20434176   Oceania  81.235 34435.3674 703658358894
-
+     country year      pop continent lifeExp gdpPercap          gdp
+72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
 ~~~
 
-Or for a specific country:
+Much better, but our function is still not general enough. What if we only want to specify the country:
 
 
 ~~~{.r}
@@ -230,6 +225,98 @@ calcGDP(gapminder, country="Australia")
 ~~~
 
 
+
+~~~{.output}
+[1] country   year      pop       continent lifeExp   gdpPercap gdp      
+<0 rows> (or 0-length row.names)
+
+~~~
+
+It doesn't return any output. Why?
+
+The `year` and `country` arguments of our function `calcGDP` are by default set to `NULL`. But within the function body we slice the `dat` data frame based on these values. So when these are set to NULL the slicing returns:
+
+~~~{.r}
+year<-NULL
+gapminder[gapminder$year == year, ]
+~~~
+
+
+~~~{.output}
+[1] country   year      pop       continent lifeExp   gdpPercap gdp      
+<0 rows> (or 0-length row.names)
+
+~~~
+
+To update our function to decide when to slice the data frame or not, R gives us a tool called a conditional statement, and looks like this:
+
+~~~{.r}
+num <- 37
+if (num > 100) {
+  print("greater")
+} else {
+  print("not greater")
+}
+~~~
+
+
+~~~{.output}
+[1] "not greater"
+ 
+~~~
+
+In our case we want to check whether the arguments `year` and `country` are not NULL. To do so we will use a built in function called `is.null` and the special operator `!`.
+
+~~~{.r}
+year <- NULL
+if (!is.null(year)) {
+  print("year is defined")
+} else {
+  print("year is NULL")
+}
+~~~
+
+
+~~~{.output}
+[1] "not greater"
+ 
+~~~
+
+
+> #### Challenge 1 {.challenge}
+>
+> Modify the `calcGDP` function to check whether each additional argument is 
+> set to `null`. Whenever they're not `null` overwrite the dataset stored in 
+> `dat` with a subset given by the non-`null` argument.
+>
+
+
+
+~~~{.r}
+# Takes a dataset and multiplies the population column
+# with the GDP per capita column.
+calcGDP <- function(dat, year=NULL, country=NULL) {
+	if(!is.null(year)){
+		dat <- dat[dat$year == year, ]
+	}
+	if(!is.null(country))
+	{
+	  dat <- dat[dat$country == country,]
+	}
+
+  gdp <- dat$pop * dat$gdpPercap
+
+  new <- cbind(dat, gdp=gdp)
+  return(new)
+}
+~~~
+
+Now when calling the `calcGDP` function specifying only the country:
+
+
+~~~{.r}
+calcGDP(gapminder, country="Australia")
+~~~
 
 ~~~{.output}
      country year      pop continent lifeExp gdpPercap          gdp
@@ -245,51 +332,11 @@ calcGDP(gapminder, country="Australia")
 70 Australia 1997 18565243   Oceania  78.830  26997.94 501223252921
 71 Australia 2002 19546792   Oceania  80.370  30687.75 599847158654
 72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
-
+ 
 ~~~
 
-Or both:
 
-
-~~~{.r}
-calcGDP(gapminder, year=2007, country="Australia")
-~~~
-
--->
-
-~~~{.output}
-     country year      pop continent lifeExp gdpPercap          gdp
-72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
-
-~~~
-
-Let's walk through the body of the function:
-
-
-~~~{.r}
-calcGDP <- function(dat, year=NULL, country=NULL) {
-~~~
-
-Here we've added two arguments, `year`, and `country`. We've set
-*default arguments* for both as `NULL` using the `=` operator
-in the function definition. This means that those arguments will
-take on those values unless the user specifies otherwise.
-
-
-~~~{.r}
-  if(!is.null(year)) {
-    dat <- dat[dat$year %in% year, ]
-  }
-  if (!is.null(country)) {
-    dat <- dat[dat$country %in% country,]
-  }
-~~~
-
-Here, we check whether each additional argument is set to `null`,
-and whenever they're not `null` overwrite the dataset stored in `dat` with
-a subset given by the non-`null` argument.
-
-I did this so that our function is more flexible for later. We
+We did this so that our function is more flexible for later. We
 can ask it to calculate the GDP for:
 
  * The whole dataset;
@@ -297,8 +344,34 @@ can ask it to calculate the GDP for:
  * A single country;
  * A single combination of year and country.
 
-By using `%in%` instead, we can also give multiple years or countries
-to those arguments.
+By using another speecial operator, `%in%` instead of `==` for the conditional splicing of the dataframe, we can also give multiple years or countries to those arguments. So the function becomes general enough:
+
+~~~{.r}
+# Takes a dataset and multiplies the population column
+# with the GDP per capita column.
+calcGDP <- function(dat, year=NULL, country=NULL) {
+	if(!is.null(year)){
+		dat <- dat[dat$year %in% year, ]
+	}
+	if(!is.null(country))
+	{
+	  dat <- dat[dat$country %in% country,]
+	}
+
+  gdp <- dat$pop * dat$gdpPercap
+
+  new <- cbind(dat, gdp=gdp)
+  return(new)
+}
+~~~
+
+Now when calling the `calcGDP` function specifying two countries and a year:
+
+
+~~~{.r}
+calcGDP(gapminder, year=2007, country=c("Argentina", "Australia"))
+~~~
+
 
 > #### Tip: Pass by value {.callout}
 >
@@ -411,6 +484,8 @@ which is much better than in our first attempt where we just got a vector of num
 [roxygen2]: http://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html
 [testthat]: http://r-pkgs.had.co.nz/tests.html
 
+<!---
+
 ## Challenge solutions
 
 > #### Solution to challenge 1 {.challenge}
@@ -467,3 +542,5 @@ which is much better than in our first attempt where we just got a vector of num
 > 
 > ~~~
 > 
+
+-->
