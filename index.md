@@ -33,17 +33,15 @@ packages we find useful, and have been chosen primarily for their usability.
 
 1.  [Introduction to R and RStudio](01-rstudio-intro.html)
 2.  [Data types and structures](02-data-structures-part1.html)
-3.  [Data structures: data frames](03-data-structures-part2.html)
-4.  [Seeking help](04-seeking-help.html)
-5.  [Project Management](05-project-intro.html)
-6.  [Subsetting data](06-data-subsetting.html)
-7.  [Functions](07-functions.html)
-8.  [Plotting](08-plot-ggplot2.html)
-9.  [Vectorisation](09-vectorisation.html)
-10. [Control flow](10-control-flow.html)
-11. [Writing data](11-writing-data.html)
-12. [Split-apply-combine](12-plyr.html)
-13. [Wrapping up](13-wrap-up.html)
+3.  [Seeking help](03-seeking-help.html)
+4.  [Project Management](04-project-intro.html)
+5.  [Data Analysis: using data frames](05-data-analysis.html)
+6.  [Functions](06-functions.html)
+7.  [Vectorisation](07-vectorisation.html)
+8.  [Control flow](08-control-flow.html)
+9.  [Split-apply-combine](09-plyr.html)
+
+[//]: # 13. [Wrapping up](13-wrap-up.html)
 
 
 ## Other Resources
