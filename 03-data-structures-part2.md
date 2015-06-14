@@ -292,14 +292,15 @@ head(gapminder)
 
 > #### Miscellaneous Tips {.callout}
 >
-> 1. Another type of file you might encounter are tab-separated
-> format. To specify a tab as a separator, use `"\t"`.
+> 1. Other popular file formats separate elements using a tab delimiter.
+> To read these files into R, change the behaviour of `read.table` 
+> using `sep="\t"`.
 >
 > 2. You can also read in files from the Internet by replacing
 > the file paths with a web address.
 >
 > 3. You can read directly from excel spreadsheets without
-> converting them to plain text first by using the `xlsx` package.
+> converting them to plain text first by using the `gdata` package.
 >
 
 To make sure our analysis is reproducible, we should put the code
