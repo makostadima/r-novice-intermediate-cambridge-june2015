@@ -82,8 +82,7 @@ It is therefore a good idea to treat your data as "read-only".
 #### Data Cleaning
 
 In many cases your data will be "dirty": it will need significant preprocessing
-to get into a format R (or any other programming language) will find useful. This
-task is sometimes called "data munging". I find it useful to store these scripts
+to get into a R format (or any other programming language) will find useful. I find it useful to store these scripts
 in a separate folder, and create a second "read-only" data folder to hold the
 "cleaned" data sets.
 
@@ -97,6 +96,8 @@ have an output folder with different sub-directories for each separate
 analysis. This makes it easier later, as many of my analyses are exploratory
 and don't end up being used in the final project, and some of the analyses
 get shared between projects.
+
+<!---
 
 > #### Tip: ProjectTemplate - a possible solution {.callout}
 >
@@ -120,6 +121,7 @@ get shared between projects.
 > For more information on ProjectTemplate and its functionality visit the
 > home page [ProjectTemplate](http://projecttemplate.net/index.html)
 >
+
 
 #### Separate function definition and application
 
@@ -146,6 +148,8 @@ one to store the analysis scripts.
 > use the `ln -s` command, and on windows you can either create a shortcut or
 > use the `mklink` command from the windows terminal.
 >
+
+-->
 
 ### Save the data in the data directory
 
