@@ -42,17 +42,17 @@
 </div>
 </section>
 <h3 id="introduction-to-rstudio">Introduction to RStudio</h3>
-<p>This lesson focuses on the fundamentals of R and <a href="http://www.rstudio.com/">RStudio</a>. The latter one is a free, open source R integrated development environment. It provides a built in editor, works on all platforms (including servers) and provides many advantages such as integration with version control and project management.</p>
-<p><strong>Basic layout</strong></p>
+<p>This lesson focuses on the fundamentals of R and <a href="http://www.rstudio.com/">RStudio</a>. The latter one is a free, open source R integrated development environment. It provides a built in editor, works on all platforms (including servers) and provides many advantages, such as integration with version control and project management.</p>
+<h3 id="basic-layout">Basic layout</h3>
 <p>When you first open RStudio, you will find three panels:</p>
 <ul>
 <li>The interactive R Console (lower left)</li>
 <li>The Environments (Workspace/History) (upper right)</li>
 <li>The Files/Plots/Packages/Help (lower right)</li>
 </ul>
-<p>Once you open files, such as R scripts, a scripting panel will also open in the top left.</p>
-<h4 id="the-interactive-r-console-and-introduction-to-r">The interactive R console and introduction to R</h4>
-<p>A lot of your time in R will be spent in the R interactive console. This is where you will run all of your code, and can be a useful environment to try out ideas. This console in RStudio is the same as the one you would get if you just typed in <code>R</code> in your commandline environment.</p>
+<p>Once you open files, such as R scripts, a scripting panel will also appear on the top left side.</p>
+<h2 id="the-interactive-r-console-and-introduction-to-r">The interactive R console and introduction to R</h2>
+<p>A lot of your time in R will be spent on the R interactive console. This is where you will run all of your code, and can be a useful environment to try out ideas. This console in RStudio is the same as the one you would get if you just typed in <code>R</code> in your command line environment.</p>
 <p>The first thing you will see in the R interactive session is a bunch of information, followed by a “&gt;” and a blinking cursor. In many ways this is similar to the shell environment: you type in commands, R tries to execute them, and then returns a result.</p>
 <h3 id="using-r-as-a-calculator">Using R as a calculator</h3>
 <p>The simplest thing you could do with R is do arithmetic:</p>
@@ -61,7 +61,7 @@
 </code></pre>
 <p>And R will print out the answer, with a preceding “[1]”. Don’t worry about this for now, we’ll explain that later. For now think of it as indicating output.</p>
 <p>Just like bash, if you type in an incomplete command, R will wait for you to complete it:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span><span class="dv">1</span> +</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> +</code></pre></div>
 <pre class="output"><code>+</code></pre>
 <p>Any time you hit return and the R session shows a “+” instead of a “&gt;”, it means it’s waiting for you to complete the command. If you want to cancel a command you can simply hit “Esc” and RStudio will give you back the “&gt;” prompt.</p>
 <aside class="callout panel panel-info">
@@ -69,7 +69,7 @@
 <h4 id="tip-cancelling-commands"><span class="glyphicon glyphicon-pushpin"></span>Tip: Cancelling commands</h4>
 </div>
 <div class="panel-body">
-<p>If you’re using R from the commandline instead of from within RStudio, you need to use <code>Ctrl+C</code> instead of <code>Esc</code> to cancel the command. This applies to Mac users as well!</p>
+<p>If you’re using R from the command line instead of from within RStudio, you need to use <code>Ctrl+C</code> instead of <code>Esc</code> to cancel the command.</p>
 <p>Cancelling a command isn’t just useful for killing incomplete commands: you can also use it to tell R to stop running code (for example if its taking much longer than you’d expect), or to delete the command you’re currently writing.</p>
 </div>
 </aside>
@@ -95,6 +95,14 @@
 <span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span><span class="dv">2</span> ^<span class="st"> </span><span class="dv">2</span>       <span class="co"># easier to read, once you know rules</span>
 <span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>(<span class="dv">2</span> ^<span class="st"> </span><span class="dv">2</span>)     <span class="co"># if you forget some rules, this might help</span></code></pre></div>
 <p>The text I’ve typed after each line of code is called a comment. Anything that follows on from the hash symbol <code>#</code> is ignored by R when it executes code.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2 id="tip"><span class="glyphicon glyphicon-pushpin"></span>Tip</h2>
+</div>
+<div class="panel-body">
+<p>It is useful to document our code in this way so that others (and us the next time we read it) have an easier time following what the code is doing. Same applies to us next time we use the code.</p>
+</div>
+</aside>
 <p>Really small or large numbers get a scientific notation:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span>/<span class="dv">10000</span></code></pre></div>
 <pre class="output"><code>[1] 2e-04
@@ -137,7 +145,7 @@
 </code></pre>
 <p>Don’t worry about trying to remember every function in R. You can simply look them up on google, or if you can remember the start of the function’s name, use the tab completion in RStudio.</p>
 <p>This is one advantage that RStudio has over R on its own, it has autocompletion abilities that allow you to more easily look up functions, their arguments, and the values that they take.</p>
-<h4 id="comparing-things">Comparing things</h4>
+<h4 id="relational-operations">Relational operations</h4>
 <p>We can also do comparison in R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> ==<span class="st"> </span><span class="dv">1</span>  <span class="co"># equality (note two equals signs, read as &quot;is equal to&quot;)</span></code></pre></div>
 <pre class="output"><code>[1] TRUE
@@ -200,7 +208,7 @@
 <p>There are a few useful commands you can use to interact with the R session.</p>
 <p><code>ls</code> will list all of the variables and functions stored in the global environment (your working R session):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre></div>
-<pre class="output"><code>[1] &quot;hook_in&quot;  &quot;hook_out&quot; &quot;x&quot;       
+<pre class="output"><code>[1] &quot;x&quot;       
 </code></pre>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
@@ -300,7 +308,7 @@
 <h4 id="challenge-1-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
 </div>
 <div class="panel-body">
-<p>Draw diagrams showing what variables refer to what values after each statement in the following program:</p>
+<p>What are the values of each variable after each statement in the following program:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mass &lt;-<span class="st"> </span><span class="fl">47.5</span>
 age &lt;-<span class="st"> </span><span class="dv">122</span>
 mass &lt;-<span class="st"> </span>mass *<span class="st"> </span><span class="fl">2.3</span>
