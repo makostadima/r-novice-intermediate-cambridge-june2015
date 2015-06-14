@@ -9,8 +9,8 @@ minutes: 45
 
 > ## Learning objectives {.objectives}
 >
-> * Become familiar with data frames
-> * To be able to read in regular data into R
+> * To become familiar with data frames
+> * To be able to read data into R
 >
 
 ### Data frames
@@ -18,10 +18,8 @@ minutes: 45
 Data frames are similar to matrices, except each column can be a different atomic type.
 Underneath the hood, data frames are really lists, where each element is
 an atomic vector, with the added restriction that they're all the same length.
-As you will see, if we pull out one column of a data frame, we will have a vector.
 
-
-Data frames can be created manually with the `data.frame` function:
+Data frames can be created manually using the function `data.frame`:
 
 
 ~~~{.r}
@@ -50,11 +48,9 @@ df
 >
 
 Each column in the data frame is simply a list element, which is why when you ask for the
-`length` of the data frame, it tells you the number of columns. If you actually want
-the number of rows, you can use the `nrow` function.
+`length` of the data frame, it tells you the number of columns. If you actually want the dimensions of the data frame use the function `dim`, or `nrow` for the number of rows and `ncol` for the number of columns independently.
 
-We can add rows or columns to a data.frame using `rbind` or `cbind` (these are
-the two-dimensional equivalents of the `c` function):
+We can add rows or columns to a data.frame using `rbind` and `cbind`, respectively; two functions that are the two-dimensional equivalents of function `c`:
 
 
 ~~~{.r}
@@ -63,10 +59,8 @@ df <- rbind(df, list("g", 11, 42))
 
 This doesn't work as expected! What does this error message tell us?
 
-It sounds like it was trying to generate a factor level. Why? Perhaps our first
-column (containing characters) is to blame...
+It sounds like it was trying to generate a factor level. Why? Perhaps our first column (containing characters) is to blame...
 We can access a column in a `data.frame` by using the `$` operator.
-
 
 
 ~~~{.r}
@@ -76,7 +70,7 @@ class(df$id)
 
 
 ~~~{.output}
-[1] "character"
+[1] "factor"
 
 ~~~
 
@@ -107,15 +101,14 @@ tail(df, n=3)
 
 
 ~~~{.output}
-  id  x   y
-6  f  6 219
-7  g 11  42
-8  g 11  42
+    id  x   y
+6    f  6 219
+7 <NA> 11  42
+8    g 11  42
 
 ~~~
 
-Note that to add a row, we need to use a list, because each column is a different type!
-If you want to add multiple rows to a data.frame, you will need to separate the new columns
+Note that to add a row we need to use a list, because each element/column is of a different atomic type! If you want to add multiple rows to a data.frame, you will need to separate the new columns
 in the list:
 
 
@@ -134,7 +127,7 @@ tail(df, n=3)
 
 ~~~
 
-You can also row-bind data.frames together:
+You can also bind data.frames together by row:
 
 
 ~~~{.r}
@@ -144,34 +137,35 @@ rbind(df, df)
 
 
 ~~~{.output}
-   id  x   y
-1   a  1 214
-2   b  2 215
-3   c  3 216
-4   d  4 217
-5   e  5 218
-6   f  6 219
-7   g 11  42
-8   g 11  42
-9   l 12 534
-10  m 13 -20
-11  a  1 214
-12  b  2 215
-13  c  3 216
-14  d  4 217
-15  e  5 218
-16  f  6 219
-17  g 11  42
-18  g 11  42
-19  l 12 534
-20  m 13 -20
+     id  x   y
+1     a  1 214
+2     b  2 215
+3     c  3 216
+4     d  4 217
+5     e  5 218
+6     f  6 219
+7  <NA> 11  42
+8     g 11  42
+9     l 12 534
+10    m 13 -20
+11    a  1 214
+12    b  2 215
+13    c  3 216
+14    d  4 217
+15    e  5 218
+16    f  6 219
+17 <NA> 11  42
+18    g 11  42
+19    l 12 534
+20    m 13 -20
 
 ~~~
 
-To add a column we can use `cbind`:
+To add a column we can use either the `$` operator or  the function `cbind`. The latter one is used to add more thn one columns too.
 
 
 ~~~{.r}
+df$z <- 10:1
 df <- cbind(df, 10:1)
 df
 ~~~
@@ -179,17 +173,17 @@ df
 
 
 ~~~{.output}
-   id  x   y 10:1
-1   a  1 214   10
-2   b  2 215    9
-3   c  3 216    8
-4   d  4 217    7
-5   e  5 218    6
-6   f  6 219    5
-7   g 11  42    4
-8   g 11  42    3
-9   l 12 534    2
-10  m 13 -20    1
+     id  x   y  z 10:1
+1     a  1 214 10   10
+2     b  2 215  9    9
+3     c  3 216  8    8
+4     d  4 217  7    7
+5     e  5 218  6    6
+6     f  6 219  5    5
+7  <NA> 11  42  4    4
+8     g 11  42  3    3
+9     l 12 534  2    2
+10    m 13 -20  1    1
 
 ~~~
 
@@ -216,7 +210,6 @@ look at the [Gapminder website](http://www.gapminder.org/data/documentation/)
 Now we want to load the gapminder data into R.
 Before reading in data, it's a good idea to have a look at its structure.
 Let's take a look using our newly-learned shell skills:
-
 
 ~~~{.r}
 cd data/ # navigate to the data directory of the project folder
