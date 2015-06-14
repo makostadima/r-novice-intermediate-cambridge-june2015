@@ -2,7 +2,7 @@
 layout: page
 title: R for reproducible scientific analysis
 subtitle: Introduction to R and RStudio
-minutes: 20
+minutes: 30
 ---
 
 
@@ -19,9 +19,9 @@ minutes: 20
 This lesson focuses on the fundamentals of R and [RStudio](http://www.rstudio.com/). 
 The latter one is a free, open source R integrated development environment. It provides 
 a built in editor, works on all platforms (including servers) and provides many 
-advantages such as integration with version control and project management.
+advantages, such as integration with version control and project management.
 
-**Basic layout**
+### Basic layout
 
 When you first open RStudio, you will find three panels:
 
@@ -29,15 +29,15 @@ When you first open RStudio, you will find three panels:
   * The Environments (Workspace/History) (upper right)
   * The Files/Plots/Packages/Help (lower right)
 
-Once you open files, such as R scripts, a scripting panel will also open in the top left.
+Once you open files, such as R scripts, a scripting panel will also appear on the top left side.
 
 
-#### The interactive R console and introduction to R
+## The interactive R console and introduction to R
 
-A lot of your time in R will be spent in the R interactive console. This is where you
+A lot of your time in R will be spent on the R interactive console. This is where you
 will run all of your code, and can be a useful environment to try out ideas. This console 
 in RStudio is the same as the one you would get if you just typed in `R` in your 
-commandline environment.
+command line environment.
 
 The first thing you will see in the R interactive session is a bunch of information,
 followed by a ">" and a blinking cursor. In many ways this is similar to the shell
@@ -67,7 +67,7 @@ Just like bash, if you type in an incomplete command, R will wait for you to
 complete it:
 
 ~~~ {.r}
-> 1 +
+1 +
 ~~~
 
 ~~~ {.output}
@@ -81,9 +81,8 @@ prompt.
 
 > #### Tip: Cancelling commands {.callout}
 >
-> If you're using R from the commandline instead of from within RStudio,
-> you need to use `Ctrl+C` instead of `Esc` to cancel the command. This
-> applies to Mac users as well!
+> If you're using R from the command line instead of from within RStudio,
+> you need to use `Ctrl+C` instead of `Esc` to cancel the command.
 >
 > Cancelling a command isn't just useful for killing incomplete commands:
 > you can also use it to tell R to stop running code (for example if its
@@ -142,6 +141,14 @@ But this can get unwieldy when not needed:
 
 The text I've typed after each line of code is called a comment. Anything that
 follows on from the hash symbol `#` is ignored by R when it executes code.
+
+
+> ## Tip {.callout}
+>
+> It is useful to document our code in this way so that others (and us 
+> the next time we read it) have an easier time following what the code 
+> is doing. Same applies to us next time we use the code.
+
 
 Really small or large numbers get a scientific notation:
 
@@ -275,7 +282,7 @@ look up functions, their arguments, and the values that they
 take.
 
 
-#### Comparing things
+#### Relational operations
 
 We can also do comparison in R:
 
@@ -469,7 +476,7 @@ ls()
 
 
 ~~~{.output}
-[1] "hook_in"  "hook_out" "x"       
+[1] "x"       
 
 ~~~
 
@@ -619,7 +626,7 @@ window and press `Esc`; this should help you out of trouble.
 
 > #### Challenge 1 {.challenge}
 >
-> Draw diagrams showing what variables refer to what values after each
+> What are the values of each variable after each
 > statement in the following program:
 >
 > 
