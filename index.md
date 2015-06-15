@@ -37,15 +37,12 @@ packages we find useful, and have been chosen primarily for their usability.
 4.  [Project Management](04-project-intro.html)
 5.  [Data Analysis: using data frames](05-data-analysis.html)
 6.  [Functions](06-func-R.html)
+7.  [Split-apply-combine](07-plyr.html)
+8.  [Best practices in R](08-best-practices-R.html)
 
 <!---
 7.  [Vectorisation](07-vectorisation.html)
 8.  [Control flow](08-control-flow.html)
--->
-
-7.  [Split-apply-combine](07-plyr.html)
-
-<!---
 # 13. [Wrapping up](13-wrap-up.html)
 -->
 
@@ -54,10 +51,8 @@ packages we find useful, and have been chosen primarily for their usability.
 *   [Reference](reference.html)
 
 <!---
-
 *   [Discussion](discussion.html)
 *   [Instructor's Guide](instructors.html)
-
 -->
 
  
