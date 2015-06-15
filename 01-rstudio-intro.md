@@ -626,14 +626,14 @@ window and press `Esc`; this should help you out of trouble.
 
 > #### Challenge 1 {.challenge}
 >
-> What are the values of each variable at the end 
-> of the following program:
+> What are the values of `mass` and `age` variables
+>  at the end of the following program:
 >
 > 
 > ~~~{.r}
 > mass <- 47.5
 > age <- 122
-> mass <- mass * 2.3
+> mass2 <- mass * 2.3
 > age <- age - 20
 > ~~~
 >
@@ -647,7 +647,7 @@ window and press `Esc`; this should help you out of trouble.
 >
 > Run the code from the previous challenge, and write a command to
 > compare mass to age. Is mass larger than age?
->
+> Do the same for mass2. Is this larger than age?
 
 > #### Challenge 3 {.challenge}
 >
