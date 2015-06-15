@@ -84,5 +84,4 @@ dat <- read.csv(file = "/Users/Karthik/Documents/sannic-project/files/dataset-20
 >
 > 1. What other suggestions do you have?
 > 2. How could we restructure the code we worked on today, to make it easier to read? Discsuss with your neighbor.
-> 3. Make two new R scripts called inflammation.R and inflammation_fxns.R
-> 4. Copy and paste the code so that inflammation.R "does stuff" and inflammation_fxns.R holds all of your functions. __Hint__: you will need to add `source` code to one of the files.
+>
