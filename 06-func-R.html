@@ -36,7 +36,6 @@
 <ul>
 <li>Define a function that takes arguments.</li>
 <li>Return a value from a function.</li>
-<li>Test a function.</li>
 <li>Set default values for function arguments.</li>
 <li>Explain why we should divide programs into small, single-purpose functions.</li>
 </ul>
@@ -45,17 +44,12 @@
 <p>If we only had one data set to analyse, it would probably be faster to load the file into a spreadsheet and use that to plot simple statistics. However, the gapminder data is updated periodically, and we may want to pull in that new information later and re-run our analysis again. We may also obtain similar data from a different source in the future.</p>
 <p>In this lesson, we’ll learn how to write a function so that we can repeat several operations with a single command.</p>
 <h3 id="defining-a-function">Defining a function</h3>
-<p>Let’s create a new folder named <code>functions/</code>. Then open a new R script file and save it under the <code>functions/</code> directory with the name functions-lesson.R.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_sum &lt;-<span class="st"> </span>function(a, b) {
-  the_sum &lt;-<span class="st"> </span>a +<span class="st"> </span>b
-  <span class="kw">return</span>(the_sum)
-}</code></pre></div>
-<p>Let’s define a function fahr_to_kelvin that converts temperatures from Fahrenheit to Kelvin:</p>
+<p>Let’s start by defining a function <code>fahr_to_kelvin</code> that converts temperatures from Fahrenheit to Kelvin:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_kelvin &lt;-<span class="st"> </span>function(temp) {
   kelvin &lt;-<span class="st"> </span>((temp -<span class="st"> </span><span class="dv">32</span>) *<span class="st"> </span>(<span class="dv">5</span> /<span class="st"> </span><span class="dv">9</span>)) +<span class="st"> </span><span class="fl">273.15</span>
   <span class="kw">return</span>(kelvin)
 }</code></pre></div>
-<p>We define <code>fahr_to_kelvin</code> by assigning it to the output of <code>function</code>. The list of argument names are contained within parentheses. Next, the <a href="reference.html#function-body">body</a> of the function–the statements that are executed when it runs–is contained within curly braces (<code>{}</code>). The statements in the body are indented by two spaces. This makes the code easier to read but does not affect how the code operates.</p>
+<p>We define <code>fahr_to_kelvin</code> by assigning it to the output of <code>function</code>. The list of argument names are containted within parentheses. Next, the <a href="reference.html#function-body">body</a> of the function–the statements that are executed when it runs–is contained within curly braces (<code>{}</code>). The statements in the body are indented by two spaces. This makes the code easier to read but does not affect how the code operates.</p>
 <p>When we call the function, the values we pass to it are assigned to those variables so that we can use them inside the function. Inside the function, we use a <a href="reference.html#return-statement">return statement</a> to send a result back to whoever asked for it.</p>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
@@ -74,88 +68,104 @@
 <span class="kw">fahr_to_kelvin</span>(<span class="dv">212</span>)</code></pre></div>
 <pre class="output"><code>[1] 373.15
 </code></pre>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
-</div>
-<div class="panel-body">
-<p>Write a function called <code>kelvin_to_celsius</code> that takes a temperature in Kelvin and returns that temperature in Celsius</p>
-<p>Hint: To convert from Kelvin to Celsius you subtract 273.15</p>
-</div>
-</section>
-<h4 id="combining-functions">Combining functions</h4>
-<p>The real power of functions comes from mixing, matching and combining them into ever large chunks to get the effect we want.</p>
-<p>Let’s define two functions that will convert temperature from Fahrenheit to Kelvin, and Kelvin to Celsius:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_kelvin &lt;-<span class="st"> </span>function(temp) {
-  kelvin &lt;-<span class="st"> </span>((temp -<span class="st"> </span><span class="dv">32</span>) *<span class="st"> </span>(<span class="dv">5</span> /<span class="st"> </span><span class="dv">9</span>)) +<span class="st"> </span><span class="fl">273.15</span>
-  <span class="kw">return</span>(kelvin)
-}
-
-kelvin_to_celsius &lt;-<span class="st"> </span>function(temp) {
+<p>We’ve successfully called the function that we defined, and we have access to the value that we returned.</p>
+<h3 id="composing-functions">Composing Functions</h3>
+<p>Now that we’ve seen how to turn Fahrenheit into Kelvin, it’s easy to turn Kelvin into Celsius:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kelvin_to_celsius &lt;-<span class="st"> </span>function(temp) {
   celsius &lt;-<span class="st"> </span>temp -<span class="st"> </span><span class="fl">273.15</span>
   <span class="kw">return</span>(celsius)
-}</code></pre></div>
+}
+
+<span class="co">#absolute zero in Celsius</span>
+<span class="kw">kelvin_to_celsius</span>(<span class="dv">0</span>)</code></pre></div>
+<pre class="output"><code>[1] -273.15
+</code></pre>
+<p>What about converting Fahrenheit to Celsius? We could write out the formula, but we don’t need to. Instead, we can <a href="reference.html#function-composition">compose</a> the two functions we have already created:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_celsius &lt;-<span class="st"> </span>function(temp) {
+  temp_k &lt;-<span class="st"> </span><span class="kw">fahr_to_kelvin</span>(temp)
+  result &lt;-<span class="st"> </span><span class="kw">kelvin_to_celsius</span>(temp_k)
+  <span class="kw">return</span>(result)
+}
+
+<span class="co"># freezing point of water in Celsius</span>
+<span class="kw">fahr_to_celsius</span>(<span class="fl">32.0</span>)</code></pre></div>
+<pre class="output"><code>[1] 0
+</code></pre>
+<p>This is our first taste of how larger programs are built: we define basic operations, then combine them in ever-large chunks to get the effect we want. Real-life functions will usually be larger than the ones shown here–typically half a dozen to a few dozen lines–but they shouldn’t ever be much longer than that, or the next person who reads it won’t be able to understand what’s going on.</p>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h4 id="challenge-2"><span class="glyphicon glyphicon-pencil"></span>Challenge 2</h4>
+<h2 id="challenge---create-a-function"><span class="glyphicon glyphicon-pencil"></span>Challenge - Create a function</h2>
 </div>
 <div class="panel-body">
-<p>Define the function to convert directly from Fahrenheit to Celsius, by reusing the two functions above (or using your own functions if you prefer).</p>
+<ul>
+<li>In the first lesson, we learned to <strong>c</strong>oncatenate elements into a vector using the <code>c</code> function, e.g. <code>x &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)</code> creates a vector <code>x</code> with three elements. Furthermore, we can extend that vector again using <code>c</code>, e.g. <code>y &lt;- c(x, &quot;D&quot;)</code> creates a vector <code>y</code> with four elements. Write a function called <code>fence</code> that takes two vectors as arguments, called <code>original</code> and <code>wrapper</code>, and returns a new vector that has the wrapper vector at the beginning and end of the original:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_practice &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Write&quot;</span>, <span class="st">&quot;programs&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;people&quot;</span>, <span class="st">&quot;not&quot;</span>, <span class="st">&quot;computers&quot;</span>)
+asterisk &lt;-<span class="st"> &quot;***&quot;</span>  <span class="co"># R interprets a variable with a single value as a vector</span>
+                   <span class="co"># with one element.</span>
+<span class="kw">fence</span>(best_practice, asterisk)</code></pre></div>
+<pre class="output"><code>[1] &quot;***&quot;       &quot;Write&quot;     &quot;programs&quot;  &quot;for&quot;       &quot;people&quot;    &quot;not&quot;      
+[7] &quot;computers&quot; &quot;***&quot;      
+</code></pre>
+<ul>
+<li>If the variable <code>v</code> refers to a vector, then <code>v[1]</code> is the vector’s first element and <code>v[length(v)]</code> is its last (the function <code>length</code> returns the number of elements in a vector). Write a function called <code>outside</code> that returns a vector made up of just the first and last elements of its input:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dry_principle &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Don&#39;t&quot;</span>, <span class="st">&quot;repeat&quot;</span>, <span class="st">&quot;yourself&quot;</span>, <span class="st">&quot;or&quot;</span>, <span class="st">&quot;others&quot;</span>)
+<span class="kw">outside</span>(dry_principle)</code></pre></div>
+<pre class="output"><code>[1] &quot;Don&#39;t&quot;  &quot;others&quot;
+</code></pre>
 </div>
 </section>
-<p>We’re going to define a function that calculates the Gross Domestic Product of a nation from the data available in our dataset:</p>
+<p>Going back to our data, we’re going to define a function, called <code>calcGDP</code>, that calculates the Gross Domestic Product of a nation from the data available in our dataset by multiplying the total population with the gross national income per capita.</p>
+<p>Let’s create a new folder within our project called <code>functions/</code>. Then open a new R script file and save it under the <code>functions/</code> directory with the name <code>calcGDP-function.R</code>.</p>
+<p>Then within the R script type:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Takes a dataset and multiplies the population column</span>
 <span class="co"># with the GDP per capita column.</span>
 calcGDP &lt;-<span class="st"> </span>function(dat) {
   gdp &lt;-<span class="st"> </span>dat$pop *<span class="st"> </span>dat$gdpPercap
   <span class="kw">return</span>(gdp)
 }</code></pre></div>
-<p>We define <code>calcGDP</code> by assigning it to the output of <code>function</code>. The list of argument names are contained within parentheses. Next, the body of the function – the statements executed when you call the function – is contained within curly braces (<code>{}</code>).</p>
-<p>We’ve indented the statements in the body by two spaces. This makes the code easier to read but does not affect how it operates.</p>
-<p>When we call the function, the values we pass to it are assigned to the arguments, which become variables inside the body of the function.</p>
-<p>Inside the function, we use the <code>return</code> function to send back the result. This return function is optional: R will automatically return the results of whatever command is executed on the last line of the function.</p>
+<p>Source the file and then apply the function <code>calcGDP</code> to the first few rows of our <code>gapminder</code> data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(<span class="kw">head</span>(gapminder))</code></pre></div>
+<p>What we get is a vector:</p>
 <pre class="output"><code>[1]  6567086330  7585448670  8758855797  9648014150  9678553274 11697659231
 </code></pre>
-<p>That’s not very informative. Let’s add some more arguments so we can extract that per year and country.</p>
+<h3 id="defining-defaults">Defining Defaults</h3>
+<p>Let’s expand the <code>calcGDP</code> function, by adding some more arguments, so that we can extract the Gross Domestic Product for a specific year and a specific country. Another feature of the new function is to return the Gross Domestic Product as an added column to the input data frame. Edit the function as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Takes a dataset and multiplies the population column</span>
 <span class="co"># with the GDP per capita column.</span>
 calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span><span class="ot">NULL</span>, <span class="dt">country=</span><span class="ot">NULL</span>) {
   dat &lt;-<span class="st"> </span>dat[dat$year ==<span class="st"> </span>year, ]
-    dat &lt;-<span class="st"> </span>dat[dat$country ==<span class="st"> </span>country,]
+  dat &lt;-<span class="st"> </span>dat[dat$country ==<span class="st"> </span>country,]
 
   gdp &lt;-<span class="st"> </span>dat$pop *<span class="st"> </span>dat$gdpPercap
 
   new &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">gdp=</span>gdp)
   <span class="kw">return</span>(new)
 }</code></pre></div>
-<p>Here we’ve added two arguments, <code>year</code>, and <code>country</code>. We’ve set <em>default arguments</em> for both as <code>NULL</code> using the <code>=</code> operator in the function definition. This means that those arguments will take on those values unless the user specifies otherwise.</p>
-<aside class="callout panel panel-info">
-<div class="panel-heading">
-<h4 id="tip-source-r-scripts"><span class="glyphicon glyphicon-pushpin"></span>Tip: source R scripts</h4>
-</div>
-<div class="panel-body">
-<p>If you’ve been writing these functions down into a separate R script (a good idea!), you can load in the functions into our R session by using the<code>source</code> function and the realtive path to the R script:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;functions/functions-lesson.R&quot;</span>)</code></pre></div>
-</div>
-</aside>
-<p>Let’s take a look at what happens when we call the calcGDP for Australia in 2007:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">calcGDP</span>(gapminder, <span class="dt">year=</span><span class="dv">2007</span>, <span class="dt">country=</span><span class="st">&quot;Australia&quot;</span>))</code></pre></div>
+<p>Here we’ve added two arguments, <code>year</code> and <code>country</code>, which we use to slice our <code>dat</code> data.frame and then compute the Gross Domestic Product on a subset of the data.</p>
+<p>To add a column to the data.frame, we used the function <code>cbind</code>, which is a two-dimensional equivalents of the <code>c</code> function, and assigned the name <code>gdp</code> to the new column.</p>
+<p>So let’s take a look at the output when we call <code>calcGDP</code> for Australia in 2007:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;functions/calcGDP-function.R&quot;</span>)
+<span class="kw">calcGDP</span>(gapminder, <span class="dt">year=</span><span class="dv">2007</span>, <span class="dt">country=</span><span class="st">&quot;Australia&quot;</span>)</code></pre></div>
 <pre class="output"><code>     country year      pop continent lifeExp gdpPercap          gdp
 72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894</code></pre>
-<p>Much better, but our function is still not general enough. What if we only want to specify the country:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">country=</span><span class="st">&quot;Australia&quot;</span>)</code></pre></div>
+<p>We’ve set <em>default arguments</em> for both <code>year</code> and <code>country</code> variables to <code>NULL</code> using the <code>=</code> operator in the function definition. This means that those arguments will take on those values unless the user specifies otherwise.</p>
+<p>This is handy because by default we can run the function <code>calcGDP</code> on the whole data frame, but also have the option to run in a subset of the data frame by passing an argument to either or both optional arguments.</p>
+<p>So let us check that our function is still working for the first few rows of our <code>gapminder</code> data frame as before.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(<span class="kw">head</span>(gapminder))</code></pre></div>
 <pre class="output"><code>[1] country   year      pop       continent lifeExp   gdpPercap gdp      
 &lt;0 rows&gt; (or 0-length row.names)
 </code></pre>
 <p>It doesn’t return any output. Why?</p>
 <p>The <code>year</code> and <code>country</code> arguments of our function <code>calcGDP</code> are by default set to <code>NULL</code>. But within the function body we slice the <code>dat</code> data frame based on these values. So when these are set to NULL the slicing returns:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year&lt;-<span class="ot">NULL</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year &lt;-<span class="st"> </span><span class="ot">NULL</span>
 gapminder[gapminder$year ==<span class="st"> </span>year, ]</code></pre></div>
 <pre class="output"><code>[1] country   year      pop       continent lifeExp   gdpPercap gdp      
 &lt;0 rows&gt; (or 0-length row.names)
 </code></pre>
-<p>To update our function to decide when to slice the data frame or not, R gives us a tool called a conditional statement, and looks like this:</p>
+<h3 id="conditionals">Conditionals</h3>
+<p>In order to update our function to decide between slicing the dataframe or not, we need to write code that automatically decides between multiple options. The tool R gives us for doing this is called a conditional statement, and looks like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num &lt;-<span class="st"> </span><span class="dv">37</span>
 if (num &gt;<span class="st"> </span><span class="dv">100</span>) {
   <span class="kw">print</span>(<span class="st">&quot;greater&quot;</span>)
@@ -265,21 +275,6 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
   <span class="kw">return</span>(new)
 <span class="er">}</span></code></pre></div>
 <p>Finally, we calculated the GDP on our new subset, and created a new data frame with that column added. This means when we call the function later we can see the context for the returned GDP values, which is much better than in our first attempt where we just got a vector of numbers.</p>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="challenge-4"><span class="glyphicon glyphicon-pencil"></span>Challenge 4</h4>
-</div>
-<div class="panel-body">
-<p>The <code>paste</code> function can be used to combine text together, e.g:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_practice &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Write&quot;</span>, <span class="st">&quot;programs&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;people&quot;</span>, <span class="st">&quot;not&quot;</span>, <span class="st">&quot;computers&quot;</span>)
-<span class="kw">paste</span>(best_practice, <span class="dt">collapse=</span><span class="st">&quot; &quot;</span>)</code></pre></div>
-<pre class="output"><code>[1] &quot;Write programs for people not computers&quot;
-</code></pre>
-<p>Write a function called <code>fence</code> that takes two vectors as arguments, called <code>text</code> and <code>wrapper</code>, and prints out the text wrapped with the <code>wrapper</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fence</span>(<span class="dt">text=</span>best_practice, <span class="dt">wrapper=</span><span class="st">&quot;***&quot;</span>)</code></pre></div>
-<p><em>Note:</em> the <code>paste</code> function has an argument called <code>sep</code>, which specifies the separator between text. The default is a space: &quot; “. The default for <code>paste0</code> is no space”“.</p>
-</div>
-</section>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
 <h2 id="tip-1"><span class="glyphicon glyphicon-pushpin"></span>Tip</h2>

@@ -11,7 +11,6 @@ minutes: 45
 >
 > * Define a function that takes arguments.
 > * Return a value from a function.
-> * Test a function.
 > * Set default values for function arguments.
 > * Explain why we should divide programs into small, single-purpose functions.
 >
@@ -24,17 +23,7 @@ several operations with a single command.
 
 ### Defining a function
 
-Let's create a new folder named `functions/`. Then open a new R script file and save it under the `functions/` directory with the name functions-lesson.R.
-
-
-~~~{.r}
-my_sum <- function(a, b) {
-  the_sum <- a + b
-  return(the_sum)
-}
-~~~
-
-Let’s define a function fahr_to_kelvin that converts temperatures from Fahrenheit to Kelvin:
+Let's start by defining a function `fahr_to_kelvin` that converts temperatures from Fahrenheit to Kelvin:
 
 
 ~~~{.r}
@@ -45,7 +34,7 @@ fahr_to_kelvin <- function(temp) {
 ~~~
 
 We define `fahr_to_kelvin` by assigning it to the output of `function`.
-The list of argument names are contained within parentheses.
+The list of argument names are containted within parentheses.
 Next, the [body](reference.html#function-body) of the function--the statements that are executed when it runs--is contained within curly braces (`{}`).
 The statements in the body are indented by two spaces.
 This makes the code easier to read but does not affect how the code operates.
@@ -77,6 +66,7 @@ fahr_to_kelvin(32)
 ~~~
 
 
+
 ~~~{.r}
 # boiling point of water
 fahr_to_kelvin(212)
@@ -89,43 +79,99 @@ fahr_to_kelvin(212)
 
 ~~~
 
-> #### Challenge 1 {.challenge}
->
-> Write a function called `kelvin_to_celsius` that takes a temperature in Kelvin
-> and returns that temperature in Celsius
->
-> Hint: To convert from Kelvin to Celsius you subtract 273.15
->
+We've successfully called the function that we defined, and we have access to the value that we returned.
 
-#### Combining functions
+### Composing Functions
 
-The real power of functions comes from mixing, matching and combining them
-into ever large chunks to get the effect we want.
-
-Let's define two functions that will convert temperature from Fahrenheit to
-Kelvin, and Kelvin to Celsius:
+Now that we've seen how to turn Fahrenheit into Kelvin, it's easy to turn Kelvin into Celsius:
 
 
 ~~~{.r}
-fahr_to_kelvin <- function(temp) {
-  kelvin <- ((temp - 32) * (5 / 9)) + 273.15
-  return(kelvin)
-}
-
 kelvin_to_celsius <- function(temp) {
   celsius <- temp - 273.15
   return(celsius)
 }
+
+#absolute zero in Celsius
+kelvin_to_celsius(0)
 ~~~
 
-> #### Challenge 2 {.challenge}
->
-> Define the function to convert directly from Fahrenheit to Celsius,
-> by reusing the two functions above (or using your own functions if you prefer).
->
 
 
-We're going to define a function that calculates the Gross Domestic Product of a nation from the data available in our dataset:
+~~~{.output}
+[1] -273.15
+
+~~~
+
+What about converting Fahrenheit to Celsius?
+We could write out the formula, but we don't need to.
+Instead, we can [compose](reference.html#function-composition) the two functions we have already created:
+
+
+~~~{.r}
+fahr_to_celsius <- function(temp) {
+  temp_k <- fahr_to_kelvin(temp)
+  result <- kelvin_to_celsius(temp_k)
+  return(result)
+}
+
+# freezing point of water in Celsius
+fahr_to_celsius(32.0)
+~~~
+
+
+
+~~~{.output}
+[1] 0
+
+~~~
+
+This is our first taste of how larger programs are built: we define basic operations, then combine them in ever-large chunks to get the effect we want.
+Real-life functions will usually be larger than the ones shown here--typically half a dozen to a few dozen lines--but they shouldn't ever be much longer than that, or the next person who reads it won't be able to understand what's going on.
+
+> ## Challenge - Create a function {.challenge}
+>
+>  + In the first lesson, we learned to **c**oncatenate elements into a vector using the `c` function, e.g. `x <- c("A", "B", "C")` creates a vector `x` with three elements.
+>  Furthermore, we can extend that vector again using `c`, e.g. `y <- c(x, "D")` creates a vector `y` with four elements.
+>  Write a function called `fence` that takes two vectors as arguments, called
+>`original` and `wrapper`, and returns a new vector that has the wrapper vector
+>at the beginning and end of the original:
+>
+> 
+> ~~~{.r}
+> best_practice <- c("Write", "programs", "for", "people", "not", "computers")
+> asterisk <- "***"  # R interprets a variable with a single value as a vector
+>                    # with one element.
+> fence(best_practice, asterisk)
+> ~~~
+> 
+> 
+> 
+> ~~~{.output}
+> [1] "***"       "Write"     "programs"  "for"       "people"    "not"      
+> [7] "computers" "***"      
+> 
+> ~~~
+>  + If the variable `v` refers to a vector, then `v[1]` is the vector's first element and `v[length(v)]` is its last (the function `length` returns the number of elements in a vector).
+>    Write a function called `outside` that returns a vector made up of just the first and last elements of its input:
+> 
+> ~~~{.r}
+> dry_principle <- c("Don't", "repeat", "yourself", "or", "others")
+> outside(dry_principle)
+> ~~~
+> 
+> 
+> 
+> ~~~{.output}
+> [1] "Don't"  "others"
+> 
+> ~~~
+
+Going back to our data, we're going to define a function, called `calcGDP`, that calculates the Gross Domestic Product of a nation from the data available in our dataset by multiplying the total population with the gross national income per capita.
+
+Let's create a new folder within our project called `functions/`. Then open a new R script file and save it under the `functions/` directory with the name `calcGDP-function.R`.
+
+Then within the R script type:
 
 
 ~~~{.r}
@@ -137,23 +183,7 @@ calcGDP <- function(dat) {
 }
 ~~~
 
-We define `calcGDP` by assigning it to the output of `function`.
-The list of argument names are contained within parentheses.
-Next, the body of the function -- the statements executed when you
-call the function -- is contained within curly braces (`{}`).
-
-We've indented the statements in the body by two spaces. This makes
-the code easier to read but does not affect how it operates.
-
-When we call the function, the values we pass to it are assigned
-to the arguments, which become variables inside the body of the
-function.
-
-Inside the function, we use the `return` function to send back the
-result. This return function is optional: R will automatically
-return the results of whatever command is executed on the last line
-of the function.
-
+Source the file and then apply the function `calcGDP` to the first few rows of our `gapminder` data frame.
 
 
 ~~~{.r}
@@ -161,22 +191,26 @@ calcGDP(head(gapminder))
 ~~~
 
 
+What we get is a vector:
+
 
 ~~~{.output}
 [1]  6567086330  7585448670  8758855797  9648014150  9678553274 11697659231
 
 ~~~
 
-That's not very informative. Let's add some more arguments so we can extract
-that per year and country.
 
+
+### Defining Defaults
+
+Let's expand the `calcGDP` function, by adding some more arguments, so that we can extract the Gross Domestic Product for a specific year and a specific country. Another feature of the new function is to return the Gross Domestic Product as an added column to the input data frame. Edit the function as follows:
 
 ~~~{.r}
 # Takes a dataset and multiplies the population column
 # with the GDP per capita column.
 calcGDP <- function(dat, year=NULL, country=NULL) {
   dat <- dat[dat$year == year, ]
-	dat <- dat[dat$country == country,]
+  dat <- dat[dat$country == country,]
 
   gdp <- dat$pop * dat$gdpPercap
 
@@ -185,29 +219,17 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
 }
 ~~~
 
-Here we've added two arguments, `year`, and `country`. We've set
-*default arguments* for both as `NULL` using the `=` operator
-in the function definition. This means that those arguments will
-take on those values unless the user specifies otherwise.
 
+Here we've added two arguments, `year` and `country`, which we use to slice our `dat` data.frame and then compute the Gross Domestic Product on a subset of the data. 
 
-> #### Tip: source R scripts {.callout}
->
-> If you've been writing these functions down into a separate R script
-> (a good idea!), you can load in the functions into our R session by using 
-> the`source` function and the realtive path to the R script:
->
-> ~~~{.r}
-> source("functions/functions-lesson.R")
-> ~~~
->
+To add a column to the data.frame, we used the function `cbind`, which is a two-dimensional equivalents of the `c` function, and assigned the name `gdp` to the new column.
 
-
-Let's take a look at what happens when we call the calcGDP for Australia in 2007:
+So let's take a look at the output when we call `calcGDP` for Australia in 2007:
 
 
 ~~~{.r}
-head(calcGDP(gapminder, year=2007, country="Australia"))
+source("functions/calcGDP-function.R")
+calcGDP(gapminder, year=2007, country="Australia")
 ~~~
 
 
@@ -217,11 +239,15 @@ head(calcGDP(gapminder, year=2007, country="Australia"))
 72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
 ~~~
 
-Much better, but our function is still not general enough. What if we only want to specify the country:
+We've set *default arguments* for both `year` and `country` variables to `NULL` using the `=` operator in the function definition. This means that those arguments will take on those values unless the user specifies otherwise.
+
+This is handy because by default we can run the function `calcGDP` on the whole data frame, but also have the option to run in a subset of the data frame by passing an argument to either or both optional arguments.
+
+So let us check that our function is still working for the first few rows of our `gapminder` data frame as before.
 
 
 ~~~{.r}
-calcGDP(gapminder, country="Australia")
+calcGDP(head(gapminder))
 ~~~
 
 
@@ -237,7 +263,7 @@ It doesn't return any output. Why?
 The `year` and `country` arguments of our function `calcGDP` are by default set to `NULL`. But within the function body we slice the `dat` data frame based on these values. So when these are set to NULL the slicing returns:
 
 ~~~{.r}
-year<-NULL
+year <- NULL
 gapminder[gapminder$year == year, ]
 ~~~
 
@@ -248,7 +274,11 @@ gapminder[gapminder$year == year, ]
 
 ~~~
 
-To update our function to decide when to slice the data frame or not, R gives us a tool called a conditional statement, and looks like this:
+
+
+### Conditionals
+
+In order to update our function to decide between slicing the dataframe or not, we need to write code that automatically decides between multiple options. The tool R gives us for doing this is called a conditional statement, and looks like this: 
 
 ~~~{.r}
 num <- 37
@@ -416,35 +446,6 @@ data frame with that column added. This means when we call the function
 later we can see the context for the returned GDP values,
 which is much better than in our first attempt where we just got a vector of numbers.
 
-> #### Challenge 4 {.challenge}
->
-> The `paste` function can be used to combine text together, e.g:
->
-> 
-> ~~~{.r}
-> best_practice <- c("Write", "programs", "for", "people", "not", "computers")
-> paste(best_practice, collapse=" ")
-> ~~~
-> 
-> 
-> 
-> ~~~{.output}
-> [1] "Write programs for people not computers"
-> 
-> ~~~
->
->  Write a function called `fence` that takes two vectors as arguments, called
-> `text` and `wrapper`, and prints out the text wrapped with the `wrapper`:
->
-> 
-> ~~~{.r}
-> fence(text=best_practice, wrapper="***")
-> ~~~
->
-> *Note:* the `paste` function has an argument called `sep`, which specifies the
-> separator between text. The default is a space: " ". The default for `paste0`
-> is no space "".
->
 
 > ## Tip {.callout}
 >
