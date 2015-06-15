@@ -239,8 +239,10 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
 }</code></pre></div>
 <p>Now when calling the <code>calcGDP</code> function specifying two countries and a year:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">year=</span><span class="dv">2007</span>, <span class="dt">country=</span><span class="kw">c</span>(<span class="st">&quot;Argentina&quot;</span>, <span class="st">&quot;Australia&quot;</span>))</code></pre></div>
-<p><sub>~</sub>{.output} country year pop continent lifeExp gdpPercap gdp 60 Argentina 2007 40301927 Americas 75.320 12779.38 515033625357 72 Australia 2007 20434176 Oceania 81.235 34435.37 703658358894</p>
-<p>}</p>
+<pre class="output"><code>     country year      pop continent lifeExp gdpPercap          gdp
+60 Argentina 2007 40301927  Americas  75.320  12779.38 515033625357
+72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
+</code></pre>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
 <h4 id="tip-pass-by-value"><span class="glyphicon glyphicon-pushpin"></span>Tip: Pass by value</h4>

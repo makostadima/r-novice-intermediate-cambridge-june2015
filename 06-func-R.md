@@ -378,7 +378,7 @@ calcGDP(gapminder, year=2007, country=c("Argentina", "Australia"))
 60 Argentina 2007 40301927  Americas  75.320  12779.38 515033625357
 72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
 
-}
+~~~
 
 
 > #### Tip: Pass by value {.callout}
