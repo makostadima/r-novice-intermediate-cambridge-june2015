@@ -132,10 +132,10 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
 <p>Here we’ve added two arguments, <code>year</code>, and <code>country</code>. We’ve set <em>default arguments</em> for both as <code>NULL</code> using the <code>=</code> operator in the function definition. This means that those arguments will take on those values unless the user specifies otherwise.</p>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
-<h4 id="tip-printing-numbers"><span class="glyphicon glyphicon-pushpin"></span>Tip: printing numbers</h4>
+<h4 id="tip-source-r-scripts"><span class="glyphicon glyphicon-pushpin"></span>Tip: source R scripts</h4>
 </div>
 <div class="panel-body">
-<p>If you’ve been writing these functions down into a separate R script (a good idea!), you can load in the functions into our R session by using the<code>source</code> function:</p>
+<p>If you’ve been writing these functions down into a separate R script (a good idea!), you can load in the functions into our R session by using the<code>source</code> function and the realtive path to the R script:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;functions/functions-lesson.R&quot;</span>)</code></pre></div>
 </div>
 </aside>
@@ -171,11 +171,11 @@ if (!<span class="kw">is.null</span>(year)) {
 } else {
   <span class="kw">print</span>(<span class="st">&quot;year is NULL&quot;</span>)
 }</code></pre></div>
-<pre class="output"><code>[1] &quot;not greater&quot;
+<pre class="output"><code>[1] &quot;year is NULL&quot;
  </code></pre>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h4 id="challenge-1-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
+<h4 id="challenge-3"><span class="glyphicon glyphicon-pencil"></span>Challenge 3</h4>
 </div>
 <div class="panel-body">
 <p>Modify the <code>calcGDP</code> function to check whether each additional argument is set to <code>null</code>. Whenever they’re not <code>null</code> overwrite the dataset stored in <code>dat</code> with a subset given by the non-<code>null</code> argument.</p>
@@ -239,6 +239,8 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
 }</code></pre></div>
 <p>Now when calling the <code>calcGDP</code> function specifying two countries and a year:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">year=</span><span class="dv">2007</span>, <span class="dt">country=</span><span class="kw">c</span>(<span class="st">&quot;Argentina&quot;</span>, <span class="st">&quot;Australia&quot;</span>))</code></pre></div>
+<p><sub>~</sub>{.output} country year pop continent lifeExp gdpPercap gdp 60 Argentina 2007 40301927 Americas 75.320 12779.38 515033625357 72 Australia 2007 20434176 Oceania 81.235 34435.37 703658358894</p>
+<p>}</p>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
 <h4 id="tip-pass-by-value"><span class="glyphicon glyphicon-pushpin"></span>Tip: Pass by value</h4>
@@ -263,7 +265,7 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
 <p>Finally, we calculated the GDP on our new subset, and created a new data frame with that column added. This means when we call the function later we can see the context for the returned GDP values, which is much better than in our first attempt where we just got a vector of numbers.</p>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h4 id="challenge-3"><span class="glyphicon glyphicon-pencil"></span>Challenge 3</h4>
+<h4 id="challenge-4"><span class="glyphicon glyphicon-pencil"></span>Challenge 4</h4>
 </div>
 <div class="panel-body">
 <p>The <code>paste</code> function can be used to combine text together, e.g:</p>

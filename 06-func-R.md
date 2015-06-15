@@ -191,11 +191,11 @@ in the function definition. This means that those arguments will
 take on those values unless the user specifies otherwise.
 
 
-> #### Tip: printing numbers {.callout}
+> #### Tip: source R scripts {.callout}
 >
 > If you've been writing these functions down into a separate R script
 > (a good idea!), you can load in the functions into our R session by using 
-> the`source` function:
+> the`source` function and the realtive path to the R script:
 >
 > ~~~{.r}
 > source("functions/functions-lesson.R")
@@ -278,12 +278,12 @@ if (!is.null(year)) {
 
 
 ~~~{.output}
-[1] "not greater"
+[1] "year is NULL"
  
 ~~~
 
 
-> #### Challenge 1 {.challenge}
+> #### Challenge 3 {.challenge}
 >
 > Modify the `calcGDP` function to check whether each additional argument is 
 > set to `null`. Whenever they're not `null` overwrite the dataset stored in 
@@ -373,6 +373,14 @@ calcGDP(gapminder, year=2007, country=c("Argentina", "Australia"))
 ~~~
 
 
+~~~{.output}
+     country year      pop continent lifeExp gdpPercap          gdp
+60 Argentina 2007 40301927  Americas  75.320  12779.38 515033625357
+72 Australia 2007 20434176   Oceania  81.235  34435.37 703658358894
+
+}
+
+
 > #### Tip: Pass by value {.callout}
 >
 > Functions in R almost always make copies of the data to operate on
@@ -408,7 +416,7 @@ data frame with that column added. This means when we call the function
 later we can see the context for the returned GDP values,
 which is much better than in our first attempt where we just got a vector of numbers.
 
-> #### Challenge 3 {.challenge}
+> #### Challenge 4 {.challenge}
 >
 > The `paste` function can be used to combine text together, e.g:
 >
