@@ -75,18 +75,19 @@ The filename needs to be a character string (or [string](reference.html#string) 
 > the file paths with a web address.
 >
 > Finally, you can also read directly from excel spreadsheets without
-> converting them to plain text first by using the `xlsx` package.
+> converting them to plain text first by using, for example, the `xlsx` 
+> package.
 >
 
-Since we didn't tell it to do anything else with the function's output, the console will display the full contents of the file `gapminder-FiveYearData.csv`.
+Since we didn't assign the output of `read.csv` to any variable, the console will display the full contents of the file `gapminder-FiveYearData.csv` onto the interactive R console.
 
 > #### Challenge 1 {.challenge}
 >
 > Go to File -> New File -> R Script, and write a R script to
 > read the gapminder dataset and assign it to a variable named `gapminder` . 
 > 
-> Create a new folder in your project named `scripts/`, store the R script
-> under it and add it to version control.
+> Save the R script as `data_analysis` under a new folder in your project 
+> named `scripts/` and add it to version control.
 >
 > Run the script using the `source` function, using the file path
 > as its argument (or by pressing the "source" button in RStudio).
@@ -106,11 +107,11 @@ dim(gapminder)
 
 
 ~~~{.output}
-[1] 1705    6
+[1] 1704    6
 
 ~~~
 
-This tells us that our data frame, `dat`, has 1705 rows and 6 columns. Alternatively, you can see the number of rows and columns using the functions `nrow` and `ncol`, respectively.
+This tells us that our data frame, `dat`, has 1704 rows and 6 columns. Alternatively, you can see the number of rows and columns using the functions `nrow` and `ncol`, respectively.
 
 ### Slicing data using indices
 
@@ -129,7 +130,7 @@ gapminder[1, 1]
 ~~~
 
 R automatically stored this first column as a factor, not a character vector.
-We can change this:
+We can change this by coercing the column to character vector:
 
 
 ~~~{.r}
@@ -231,8 +232,7 @@ country is "Argentina".
 
 ### Plotting
 
-The mathematician Richard Hamming once said, "The purpose of computing is insight, not numbers," and the best way to develop insight is often to visualize data.
-Visualisation deserves an entire lecture (or course) of its own, but we can explore a few of R's plotting features.
+The mathematician Richard Hamming once said, "The purpose of computing is insight, not numbers," and the best way to develop insight is often to visualise data. Visualisation deserves an entire lecture (or course) of its own, but we can explore a few of R's plotting features.
 
 Let's take a look at the population of Argentina over time.
 Plotting the values is done with the function `plot`.

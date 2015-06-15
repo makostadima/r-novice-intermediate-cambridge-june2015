@@ -75,17 +75,17 @@ Afghanistan,1992,16317921,Asia,41.674,649.3413952
 <p><code>read.csv</code> is a fairly thin wrapper around <code>read.table</code>, a more general R function to read data. <code>read.csv</code> is a function specific for comma separated data.</p>
 <p>Another file format you might encounter is the tab-separated. To read such files, use <code>read.delim</code> and specify a tab as a separator using <code>sep=&quot;\t&quot;</code>.</p>
 <p>You can also read in files from the Internet by replacing the file paths with a web address.</p>
-<p>Finally, you can also read directly from excel spreadsheets without converting them to plain text first by using the <code>xlsx</code> package.</p>
+<p>Finally, you can also read directly from excel spreadsheets without converting them to plain text first by using, for example, the <code>xlsx</code> package.</p>
 </div>
 </aside>
-<p>Since we didn’t tell it to do anything else with the function’s output, the console will display the full contents of the file <code>gapminder-FiveYearData.csv</code>.</p>
+<p>Since we didn’t assign the output of <code>read.csv</code> to any variable, the console will display the full contents of the file <code>gapminder-FiveYearData.csv</code> onto the interactive R console.</p>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
 <h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
 </div>
 <div class="panel-body">
 <p>Go to File -&gt; New File -&gt; R Script, and write a R script to read the gapminder dataset and assign it to a variable named <code>gapminder</code> .</p>
-<p>Create a new folder in your project named <code>scripts/</code>, store the R script under it and add it to version control.</p>
+<p>Save the R script as <code>data_analysis</code> under a new folder in your project named <code>scripts/</code> and add it to version control.</p>
 <p>Run the script using the <code>source</code> function, using the file path as its argument (or by pressing the “source” button in RStudio).</p>
 <p>What is the data structure of <code>gapminder</code>? (hint: use function <code>class</code>)</p>
 </div>
@@ -93,9 +93,9 @@ Afghanistan,1992,16317921,Asia,41.674,649.3413952
 <p>Data frames are similar to matrices, except each column can be a different atomic type. Underneath the hood, data frames are really lists, where each element is an atomic vector, with the added restriction that they’re all the same length. Data frames are very useful for storing data and you will find them elsewhere when programming in R. A typical data frame of experimental data contains individual observations in rows and variables in columns.</p>
 <p>We can see the dimensions, or <a href="reference.html#shape-(of-an-array)">shape</a>, of the data frame with the function <code>dim</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(gapminder)</code></pre></div>
-<pre class="output"><code>[1] 1705    6
+<pre class="output"><code>[1] 1704    6
 </code></pre>
-<p>This tells us that our data frame, <code>dat</code>, has 1705 rows and 6 columns. Alternatively, you can see the number of rows and columns using the functions <code>nrow</code> and <code>ncol</code>, respectively.</p>
+<p>This tells us that our data frame, <code>dat</code>, has 1704 rows and 6 columns. Alternatively, you can see the number of rows and columns using the functions <code>nrow</code> and <code>ncol</code>, respectively.</p>
 <h3 id="slicing-data-using-indices">Slicing data using indices</h3>
 <p>If we want to get a single value from the data frame, we can provide an <a href="reference.html#index">index</a> in square brackets, just as we do in math:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first value in dat</span>
@@ -103,7 +103,7 @@ gapminder[<span class="dv">1</span>, <span class="dv">1</span>]</code></pre></di
 <pre class="output"><code>[1] Afghanistan
 142 Levels: Afghanistan Albania Algeria Angola Argentina Australia ... Zimbabwe
 </code></pre>
-<p>R automatically stored this first column as a factor, not a character vector. We can change this:</p>
+<p>R automatically stored this first column as a factor, not a character vector. We can change this by coercing the column to character vector:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder$country &lt;-<span class="st"> </span><span class="kw">as.character</span>(gapminder$country)
 <span class="kw">class</span>(gapminder$country)</code></pre></div>
 <pre class="output"><code>[1] &quot;character&quot;
@@ -155,7 +155,7 @@ gapminder[<span class="dv">1</span>, <span class="dv">1</span>]</code></pre></di
 </div>
 </section>
 <h3 id="plotting">Plotting</h3>
-<p>The mathematician Richard Hamming once said, “The purpose of computing is insight, not numbers,” and the best way to develop insight is often to visualize data. Visualisation deserves an entire lecture (or course) of its own, but we can explore a few of R’s plotting features.</p>
+<p>The mathematician Richard Hamming once said, “The purpose of computing is insight, not numbers,” and the best way to develop insight is often to visualise data. Visualisation deserves an entire lecture (or course) of its own, but we can explore a few of R’s plotting features.</p>
 <p>Let’s take a look at the population of Argentina over time. Plotting the values is done with the function <code>plot</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dat &lt;-<span class="st"> </span>gapminder[gapminder$country==<span class="st">&quot;Argentina&quot;</span>, ]
 <span class="kw">plot</span>(dat$year, dat$pop)</code></pre></div>
