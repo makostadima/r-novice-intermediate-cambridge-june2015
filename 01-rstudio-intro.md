@@ -646,12 +646,12 @@ window and press `Esc`; this should help you out of trouble.
 > #### Challenge 2 {.challenge}
 >
 > Run the code from the previous challenge, and write a command to
-> compare mass to age. Is mass larger than age?
-> Do the same for mass2. Is this larger than age?
+> compare `mass` to `age`. Is `mass` larger than `age`?
+> Do the same for `mass2`. Is this larger than `age`?
 
 > #### Challenge 3 {.challenge}
 >
-> Clean up your working environment by deleting the mass and age
+> Clean up your working environment by deleting the `mass` and `age`
 > variables.
 >
 
