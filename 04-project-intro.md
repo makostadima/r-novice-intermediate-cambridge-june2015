@@ -171,8 +171,10 @@ First step for our project is to generate a new folder, called `data`, and store
 > 2. In the popup window type the name of the new folder.
 > 
 > To download the gapminder data from [this link](http://tinyurl.com/gapminder-FiveYearData-csv), you would have typically used the `wget`
-> function in the shell. In that case the command would be: `wget http://tinyurl.com/gapminder-FiveYearData-csv`
+> function in the shell. In that case the command would be: `wget http://tinyurl.com/gapminder-FiveYearData-csv`.
+>
 > To run a shell command in R we can use the `system` function. Look at the arguments of the command in the help page and then:
+>
 > 1. Use the R function `system` to run the shell command wget from the link
 > above. To save the file under the recently created `data` folder, add the 
 > following flag `--output-document=data/gapminder-FiveYearData.csv` to the
