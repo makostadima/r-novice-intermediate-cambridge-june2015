@@ -99,18 +99,22 @@ together afterwards.
 
 #### The `plyr` package
 
-For those of you who have used R before, you might be familiar with the
-`apply` family of functions. While R's built in functions do work, we're
-going to introduce you to another method for solving the "split-apply-combine"
+We introduce another method for solving the "split-apply-combine"
 problem. The [plyr](http://had.co.nz/plyr/) package provides a set of
-functions that we find more user friendly for solving this problem.
+functions that are user friendly for solving this problem.
 
-We installed this package in an earlier challenge. Let's load it now:
+To install this package:
 
+~~~{.r}
+install.packages("plyr", dependencies=TRUE)
+~~~
+
+Let's load it now:
 
 ~~~{.r}
 library(plyr)
 ~~~
+
 
 Plyr has functions for operating on `lists`, `data.frames` and `arrays`
 (matrices, or n-dimensional vectors). Each function performs:
@@ -131,7 +135,7 @@ They're named by their input data type and represent null output by a `_` (see
 table)
 
 Note here that plyr's use of "array" is different to R's,
-an array in ply can include a vector or matrix.
+an array in plyr can include a vector or matrix.
 
 ![Full apply suite](fig/full_apply_suite.png)
 
@@ -347,8 +351,8 @@ continent          1992         1997         2002         2007
 
 ~~~
 
-You can use these functions in place of `for` loops (and its usually faster to
-do so): just write the body of the for loop in the anonymous function:
+You can define your own functions within the `xxply` function by adding the
+the body of the function in the anonymous function:
 
 
 ~~~{.r}
@@ -403,7 +407,18 @@ d_ply(
 > using one of the `plyr` functions.
 >
 
-> #### Alternate Challenge if class seems lost {.challenge}
+<!---
+lifeExpSpan = ddply(
+ .data = lifeExp,
+ .variables = "year",
+ .fun = function(dataGroup) {
+ mean(dataGroup[, 3])
+ })
+
+lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952, 2]
+-->
+
+> #### Alternate Challenge {.challenge}
 >
 > Without running them, which of the following will calculate the average
 > life expectancy per continent:

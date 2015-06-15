@@ -74,8 +74,10 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
 </div>
 <p>We want to <em>split</em> our data into groups, in this case continents, <em>apply</em> some calculations on that group, then optionally <em>combine</em> the results together afterwards.</p>
 <h4 id="the-plyr-package">The <code>plyr</code> package</h4>
-<p>For those of you who have used R before, you might be familiar with the <code>apply</code> family of functions. While R’s built in functions do work, we’re going to introduce you to another method for solving the “split-apply-combine” problem. The <a href="http://had.co.nz/plyr/">plyr</a> package provides a set of functions that we find more user friendly for solving this problem.</p>
-<p>We installed this package in an earlier challenge. Let’s load it now:</p>
+<p>We introduce another method for solving the “split-apply-combine” problem. The <a href="http://had.co.nz/plyr/">plyr</a> package provides a set of functions that are user friendly for solving this problem.</p>
+<p>To install this package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;plyr&quot;</span>, <span class="dt">dependencies=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p>Let’s load it now:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(plyr)</code></pre></div>
 <p>Plyr has functions for operating on <code>lists</code>, <code>data.frames</code> and <code>arrays</code> (matrices, or n-dimensional vectors). Each function performs:</p>
 <ol style="list-style-type: decimal">
@@ -85,7 +87,7 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
 </ol>
 <p>The functions are named based on the data structure they expect as input, and the data structure you want returned as output: [a]rray, [l]ist, or [d]ata.frame. The first letter corresponds to the input data structure, the second letter to the output data structure, and then the rest of the function is named “ply”.</p>
 <p>This gives us 9 core functions **ply. There are an additional three functions which will only perform the split and apply steps, and not any combine step. They’re named by their input data type and represent null output by a <code>_</code> (see table)</p>
-<p>Note here that plyr’s use of “array” is different to R’s, an array in ply can include a vector or matrix.</p>
+<p>Note here that plyr’s use of “array” is different to R’s, an array in plyr can include a vector or matrix.</p>
 <div class="figure">
 <img src="fig/full_apply_suite.png" alt="Full apply suite" />
 <p class="caption">Full apply suite</p>
@@ -245,7 +247,7 @@ continent          1992         1997         2002         2007
   Europe   342703247405 383606933833 436448815097 493183311052
   Oceania  236319179826 289304255183 345236880176 403657044512
 </code></pre>
-<p>You can use these functions in place of <code>for</code> loops (and its usually faster to do so): just write the body of the for loop in the anonymous function:</p>
+<p>You can define your own functions within the <code>xxply</code> function by adding the the body of the function in the anonymous function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">d_ply</span>(
   <span class="dt">.data=</span>gapminder,
   <span class="dt">.variables =</span> <span class="st">&quot;continent&quot;</span>,
@@ -295,9 +297,19 @@ continent          1992         1997         2002         2007
 <p>Calculate the difference in mean life expectancy between the years 1952 and 2007 from the output of challenge 2 using one of the <code>plyr</code> functions.</p>
 </div>
 </section>
+<!---
+lifeExpSpan = ddply(
+ .data = lifeExp,
+ .variables = "year",
+ .fun = function(dataGroup) {
+ mean(dataGroup[, 3])
+ })
+
+lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952, 2]
+-->
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h4 id="alternate-challenge-if-class-seems-lost"><span class="glyphicon glyphicon-pencil"></span>Alternate Challenge if class seems lost</h4>
+<h4 id="alternate-challenge"><span class="glyphicon glyphicon-pencil"></span>Alternate Challenge</h4>
 </div>
 <div class="panel-body">
 <p>Without running them, which of the following will calculate the average life expectancy per continent:</p>
