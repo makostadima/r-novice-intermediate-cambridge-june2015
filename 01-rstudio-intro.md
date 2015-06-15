@@ -626,8 +626,8 @@ window and press `Esc`; this should help you out of trouble.
 
 > #### Challenge 1 {.challenge}
 >
-> What are the values of each variable after each
-> statement in the following program:
+> What are the values of each variable at the end 
+> of the following program:
 >
 > 
 > ~~~{.r}
@@ -636,6 +636,11 @@ window and press `Esc`; this should help you out of trouble.
 > mass <- mass * 2.3
 > age <- age - 20
 > ~~~
+>
+> 1. mass: 47.5 and age: 122 
+> 2. mass: 109.25 and age: 122
+> 3. mass: 109.25 and age: 102 
+> 4. mass: 47.5 and age: 102 
 >
 
 > #### Challenge 2 {.challenge}
