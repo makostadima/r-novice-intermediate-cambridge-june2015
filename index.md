@@ -37,7 +37,7 @@ packages we find useful, and have been chosen primarily for their usability.
 4.  [Project Management](04-project-intro.html)
 5.  [Data Analysis: using data frames](05-data-analysis.html)
 6.  [Functions](06-func-R.html)
-7.  [Looping over functions](07-loops-R.html)
+7.  [Generating Multiple Plots](07-loops-R.html)
 8.  [Split-apply-combine](08-plyr.html)
 9.  [Best practices in R](09-best-practices-R.html)
 
