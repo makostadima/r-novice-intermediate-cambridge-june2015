@@ -272,8 +272,7 @@ calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span
 </aside>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  gdp &lt;-<span class="st"> </span>dat$pop *<span class="st"> </span>dat$gdpPercap
   new &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">gdp=</span>gdp)
-  <span class="kw">return</span>(new)
-<span class="er">}</span></code></pre></div>
+  <span class="kw">return</span>(new)</code></pre></div>
 <p>Finally, we calculated the GDP on our new subset, and created a new data frame with that column added. This means when we call the function later we can see the context for the returned GDP values, which is much better than in our first attempt where we just got a vector of numbers.</p>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
