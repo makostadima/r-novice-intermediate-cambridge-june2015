@@ -313,7 +313,7 @@ if (!is.null(year)) {
 ~~~
 
 
-> #### Challenge 3 {.challenge}
+> #### Challenge - Adding conditional statements {.challenge}
 >
 > Modify the `calcGDP` function to check whether each additional argument is 
 > set to `null`. Whenever they're not `null` overwrite the dataset stored in 

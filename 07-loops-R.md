@@ -22,11 +22,11 @@ We have created a function called `calcGDP` that calculates the Gross Domestic P
 ~~~{.r}
 calcGDP <- function(dat, year=NULL, country=NULL) {
 	if(!is.null(year)){
-		dat <- dat[dat$year == year, ]
+		dat <- dat[dat$year %in% year, ]
 	}
 	if(!is.null(country))
 	{
-	  dat <- dat[dat$country == country,]
+	  dat <- dat[dat$country %in% country,]
 	}
 
   gdp <- dat$pop * dat$gdpPercap
@@ -45,7 +45,7 @@ Following the plot example in lesson [05](05-data-analysis.html) we can plot the
 plot(gdp.argentina$year, gdp.argentina$gdp)
 ~~~
 
-<img src="07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /><img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /><img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" style="display: block; margin: auto;" />
+<img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" />
 
 but we have data for 142 countries in our dataset. We want to create plots for all of them with a single statement. To do that, we'll have to teach the computer how to repeat things.
 

@@ -278,40 +278,6 @@ continent          1992         1997         2002         2007
 <h4 id="challenge-1"><span class="glyphicon glyphicon-pencil"></span>Challenge 1</h4>
 </div>
 <div class="panel-body">
-<p>Calculate the average life expectancy per continent. Which has the longest? Which had the shortest?</p>
-</div>
-</section>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="challenge-2"><span class="glyphicon glyphicon-pencil"></span>Challenge 2</h4>
-</div>
-<div class="panel-body">
-<p>Calculate the average life expectancy per continent and year. Which had the longest and shortest in 2007? Which had the greatest change in between 1952 and 2007?</p>
-</div>
-</section>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="advanced-challenge"><span class="glyphicon glyphicon-pencil"></span>Advanced Challenge</h4>
-</div>
-<div class="panel-body">
-<p>Calculate the difference in mean life expectancy between the years 1952 and 2007 from the output of challenge 2 using one of the <code>plyr</code> functions.</p>
-</div>
-</section>
-<!---
-lifeExpSpan = ddply(
- .data = lifeExp,
- .variables = "year",
- .fun = function(dataGroup) {
- mean(dataGroup[, 3])
- })
-
-lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952, 2]
--->
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="alternate-challenge"><span class="glyphicon glyphicon-pencil"></span>Alternate Challenge</h4>
-</div>
-<div class="panel-body">
 <p>Without running them, which of the following will calculate the average life expectancy per continent:</p>
 <ol style="list-style-type: decimal">
 <li></li>
@@ -353,6 +319,32 @@ lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952,
 )</code></pre></div>
 </div>
 </section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="challenge-2"><span class="glyphicon glyphicon-pencil"></span>Challenge 2</h4>
+</div>
+<div class="panel-body">
+<p>Calculate the average life expectancy per continent and year. Which continent had the longest and shortest in 2007? Which had the greatest change in between 1952 and 2007?</p>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h4 id="advanced-challenge"><span class="glyphicon glyphicon-pencil"></span>Advanced Challenge</h4>
+</div>
+<div class="panel-body">
+<p>Calculate the difference in mean life expectancy between the years 1952 and 2007 from the output of challenge 2 using one of the <code>plyr</code> functions.</p>
+</div>
+</section>
+<!---
+lifeExpSpan = ddply(
+ .data = lifeExp,
+ .variables = "year",
+ .fun = function(dataGroup) {
+ mean(dataGroup[, 3])
+ })
+
+lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952, 2]
+-->
         </div>
       </div>
       </article>

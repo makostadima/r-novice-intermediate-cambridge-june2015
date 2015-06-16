@@ -389,37 +389,6 @@ d_ply(
 
 > #### Challenge 1 {.challenge}
 >
-> Calculate the average life expectancy per continent. Which has the longest?
-> Which had the shortest?
->
-
-> #### Challenge 2 {.challenge}
->
-> Calculate the average life expectancy per continent and year. Which had the
-> longest and shortest in 2007? Which had the greatest change in between 1952
-> and 2007?
->
-
-> #### Advanced Challenge {.challenge}
->
-> Calculate the difference in mean life expectancy between
-> the years 1952 and 2007 from the output of challenge 2
-> using one of the `plyr` functions.
->
-
-<!---
-lifeExpSpan = ddply(
- .data = lifeExp,
- .variables = "year",
- .fun = function(dataGroup) {
- mean(dataGroup[, 3])
- })
-
-lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952, 2]
--->
-
-> #### Alternate Challenge {.challenge}
->
 > Without running them, which of the following will calculate the average
 > life expectancy per continent:
 >
@@ -469,3 +438,29 @@ lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952,
 > )
 > ~~~
 >
+
+> #### Challenge 2 {.challenge}
+>
+> Calculate the average life expectancy per continent and year. Which 
+> continent had the longest and shortest in 2007? Which had the greatest 
+> change in between 1952 and 2007?
+>
+
+> #### Advanced Challenge {.challenge}
+>
+> Calculate the difference in mean life expectancy between
+> the years 1952 and 2007 from the output of challenge 2
+> using one of the `plyr` functions.
+>
+
+<!---
+lifeExpSpan = ddply(
+ .data = lifeExp,
+ .variables = "year",
+ .fun = function(dataGroup) {
+ mean(dataGroup[, 3])
+ })
+
+lifeExpSpan[lifeExpSpan$year == 2007, 2] - lifeExpSpan[lifeExpSpan$year == 1952, 2]
+-->
+

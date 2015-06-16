@@ -46,11 +46,11 @@
 <p>We have created a function called <code>calcGDP</code> that calculates the Gross Domestic Product:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calcGDP &lt;-<span class="st"> </span>function(dat, <span class="dt">year=</span><span class="ot">NULL</span>, <span class="dt">country=</span><span class="ot">NULL</span>) {
     if(!<span class="kw">is.null</span>(year)){
-        dat &lt;-<span class="st"> </span>dat[dat$year ==<span class="st"> </span>year, ]
+        dat &lt;-<span class="st"> </span>dat[dat$year %in%<span class="st"> </span>year, ]
     }
     if(!<span class="kw">is.null</span>(country))
     {
-      dat &lt;-<span class="st"> </span>dat[dat$country ==<span class="st"> </span>country,]
+      dat &lt;-<span class="st"> </span>dat[dat$country %in%<span class="st"> </span>country,]
     }
 
   gdp &lt;-<span class="st"> </span>dat$pop *<span class="st"> </span>dat$gdpPercap
@@ -62,7 +62,7 @@
 gdp.argentina &lt;-<span class="st"> </span><span class="kw">calcGDP</span>(<span class="dt">dat=</span>gapminder, <span class="dt">country=</span><span class="st">&quot;Argentina&quot;</span>)</code></pre></div>
 <p>Following the plot example in lesson <a href="05-data-analysis.html">05</a> we can plot the gross domestic product of Argentina over the years:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(gdp.argentina$year, gdp.argentina$gdp)</code></pre></div>
-<p><img src="07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /><img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /><img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /></p>
+<p><img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /></p>
 <p>but we have data for 142 countries in our dataset. We want to create plots for all of them with a single statement. To do that, we’ll have to teach the computer how to repeat things.</p>
 <h3 id="for-loops">For Loops</h3>
 <p>Suppose we want to print each word in a sentence. One way is to use six <code>print</code> statements:</p>
