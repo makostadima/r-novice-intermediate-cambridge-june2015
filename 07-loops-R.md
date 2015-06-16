@@ -16,39 +16,38 @@ minutes: 30
 > * Use a function to get a list of filenames that match a simple pattern.
 > * Use a `for` loop to process multiple files.
 
-We have created a function called `analyze` that creates graphs of the minimum, average, and maximum daily inflammation rates for a single data set:
+We have created a function called `calcGDP` that calculates the Gross Domestic Product:
 
 
 ~~~{.r}
-analyze <- function(filename) {
-  # Plots the average, min, and max inflammation over time.
-  # Input is character string of a csv file.
-  dat <- read.csv(file = filename, header = FALSE)
-  avg_day_inflammation <- apply(dat, 2, mean)
-  plot(avg_day_inflammation)
-  max_day_inflammation <- apply(dat, 2, max)
-  plot(max_day_inflammation)
-  min_day_inflammation <- apply(dat, 2, min)
-  plot(min_day_inflammation)
+calcGDP <- function(dat, year=NULL, country=NULL) {
+	if(!is.null(year)){
+		dat <- dat[dat$year == year, ]
+	}
+	if(!is.null(country))
+	{
+	  dat <- dat[dat$country == country,]
+	}
+
+  gdp <- dat$pop * dat$gdpPercap
+
+  new <- cbind(dat, gdp=gdp)
+  return(new)
 }
 
-analyze("data/inflammation-01.csv")
+gdp.argentina <- calcGDP(dat=gapminder, country="Argentina")
 ~~~
 
-<img src="fig/03-loops-R-inflammation-01-1.png" title="plot of chunk inflammation-01" alt="plot of chunk inflammation-01" style="display: block; margin: auto;" /><img src="fig/03-loops-R-inflammation-01-2.png" title="plot of chunk inflammation-01" alt="plot of chunk inflammation-01" style="display: block; margin: auto;" /><img src="fig/03-loops-R-inflammation-01-3.png" title="plot of chunk inflammation-01" alt="plot of chunk inflammation-01" style="display: block; margin: auto;" />
-
-We can use it to analyze other data sets one by one:
+Following the plot example in lesson [05](05-data-analysis.html) we can plot the gross domestic product of Argentina over the years:
 
 
 ~~~{.r}
-analyze("data/inflammation-02.csv")
+plot(gdp.argentina$year, gdp.argentina$gdp)
 ~~~
 
-<img src="fig/03-loops-R-inflammation-02-1.png" title="plot of chunk inflammation-02" alt="plot of chunk inflammation-02" style="display: block; margin: auto;" /><img src="fig/03-loops-R-inflammation-02-2.png" title="plot of chunk inflammation-02" alt="plot of chunk inflammation-02" style="display: block; margin: auto;" /><img src="fig/03-loops-R-inflammation-02-3.png" title="plot of chunk inflammation-02" alt="plot of chunk inflammation-02" style="display: block; margin: auto;" />
+<img src="07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /><img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" alt="plot of gross domestic product - Argentina" style="display: block; margin: auto;" /><img src="fig/07-loops-gapminder-Argentina.png" title="plot of gross domestic product - Argentina" style="display: block; margin: auto;" />
 
-but we have a dozen data sets right now and more on the way.
-We want to create plots for all our data sets with a single statement.
-To do that, we'll have to teach the computer how to repeat things.
+but we have data for 142 countries in our dataset. We want to create plots for all of them with a single statement. To do that, we'll have to teach the computer how to repeat things.
 
 ### For Loops
 
@@ -266,37 +265,7 @@ length(vowels)
 
 > ## Challenge - Using loops {.challenge}
 >
-> 1. R has a built-in function called `seq` that creates a list of numbers:
->
-> 
-> ~~~{.r}
-> seq(3)
-> ~~~
-> 
-> 
-> 
-> ~~~{.output}
-> [1] 1 2 3
-> 
-> ~~~
->
-> Using `seq`, write a function that prints the first **N** natural numbers, one per line:
->
-> 
-> ~~~{.r}
-> print_N(3)
-> ~~~
-> 
-> 
-> 
-> ~~~{.output}
-> [1] 1
-> [1] 2
-> [1] 3
-> 
-> ~~~
->
-> 2. Write a function called `total` that calculates the sum of the values in a vector.
+> 1. Write a function called `total` that calculates the sum of the values in a vector.
 > (R has a built-in function called `sum` that does this for you.
 > Please don't use it for this exercise.)
 >
@@ -313,81 +282,23 @@ length(vowels)
 > 
 > ~~~
 >
-> 3. Exponentiation is built into R:
->
-> 
-> ~~~{.r}
-> 2^4
-> ~~~
-> 
-> 
-> 
-> ~~~{.output}
-> [1] 16
-> 
-> ~~~
->
-> Write a function called `expo` that uses a loop to calculate the same result.
-> 
-> ~~~{.r}
-> expo(2, 4)
-> ~~~
-> 
-> 
-> 
-> ~~~{.output}
-> [1] 16
-> 
-> ~~~
->
 
-### Processing Multiple Files
+### Generating Multiple Plots
 
-We now have almost everything we need to process all our data files.
-The only thing that's missing is a function that finds files whose names match a pattern.
-We do not need to write it ourselves because R already has a function to do this called `list.files`.
-
-If we run the function without any arguments, `list.files()`, it returns every file in the current working directory.
-We can understand this result by reading the help file (`?list.files`).
-The first argument, `path`, is the path to the directory to be searched, and it has the default value of `"."` (recall from the [lesson](http://swcarpentry.github.io/shell-novice/01-filedir.html) on the Unix Shell that `"."` is shorthand for the current working directory).
-The second argument, `pattern`, is the pattern being searched, and it has the default value of `NULL`.
-Since no pattern is specified to filter the files, all files are returned.
-
-So to list all the csv files, we could run either of the following:
+We now have almost everything we need to generate the gdp plots for all countries. The only thing missing is creating a vector that contains all the countries in our dataset. Using the function `unique` on the `country` column of `gapminder` object, we can extract the 142 countries:
 
 
 ~~~{.r}
-list.files(path = "data", pattern = "csv")
+countries <- unique(gapminder$country)
+length(countries)
+tail(countries, n=3)
 ~~~
 
 
 
 ~~~{.output}
- [1] "car-speeds-cleaned.csv" "car-speeds.csv"        
- [3] "inflammation-01.csv"    "inflammation-02.csv"   
- [5] "inflammation-03.csv"    "inflammation-04.csv"   
- [7] "inflammation-05.csv"    "inflammation-06.csv"   
- [9] "inflammation-07.csv"    "inflammation-08.csv"   
-[11] "inflammation-09.csv"    "inflammation-10.csv"   
-[13] "inflammation-11.csv"    "inflammation-12.csv"   
-[15] "sample.csv"             "small-01.csv"          
-[17] "small-02.csv"           "small-03.csv"          
-
-~~~
-
-
-
-~~~{.r}
-list.files(path = "data", pattern = "inflammation")
-~~~
-
-
-
-~~~{.output}
- [1] "inflammation-01.csv" "inflammation-02.csv" "inflammation-03.csv"
- [4] "inflammation-04.csv" "inflammation-05.csv" "inflammation-06.csv"
- [7] "inflammation-07.csv" "inflammation-08.csv" "inflammation-09.csv"
-[10] "inflammation-10.csv" "inflammation-11.csv" "inflammation-12.csv"
+[1] 142
+[1] "Yemen Rep." "Zambia"     "Zimbabwe"
 
 ~~~
 
@@ -404,116 +315,32 @@ list.files(path = "data", pattern = "inflammation")
 [Noble2009]: http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000424
 
 
-As these examples show, `list.files` result is a vector of strings, which means we can loop over it to do something with each filename in turn.
-In our case, the "something" we want is our `analyze` function.
-
-Because we have put our data in separate subdirectory, if we want to access these files
-using the output of `list.files` we also need to include the "path" portion of the file name.
-We can do that by using the argument `full.names = TRUE`.
-
-
-~~~{.r}
-list.files(path = "data", pattern = "csv", full.names = TRUE)
-~~~
-
-
-
-~~~{.output}
- [1] "data/car-speeds-cleaned.csv" "data/car-speeds.csv"        
- [3] "data/inflammation-01.csv"    "data/inflammation-02.csv"   
- [5] "data/inflammation-03.csv"    "data/inflammation-04.csv"   
- [7] "data/inflammation-05.csv"    "data/inflammation-06.csv"   
- [9] "data/inflammation-07.csv"    "data/inflammation-08.csv"   
-[11] "data/inflammation-09.csv"    "data/inflammation-10.csv"   
-[13] "data/inflammation-11.csv"    "data/inflammation-12.csv"   
-[15] "data/sample.csv"             "data/small-01.csv"          
-[17] "data/small-02.csv"           "data/small-03.csv"          
-
-~~~
-
-
-
-~~~{.r}
-list.files(path = "data", pattern = "inflammation", full.names = TRUE)
-~~~
-
-
-
-~~~{.output}
- [1] "data/inflammation-01.csv" "data/inflammation-02.csv"
- [3] "data/inflammation-03.csv" "data/inflammation-04.csv"
- [5] "data/inflammation-05.csv" "data/inflammation-06.csv"
- [7] "data/inflammation-07.csv" "data/inflammation-08.csv"
- [9] "data/inflammation-09.csv" "data/inflammation-10.csv"
-[11] "data/inflammation-11.csv" "data/inflammation-12.csv"
-
-~~~
-
-
-Let's test out running our `analyze` function by using it on the first three files in the vector returned by `list.files`:
-
-
-
-~~~{.r}
-filenames <- list.files(path = "data", pattern = "inflammation", full.names = TRUE)
-filenames <- filenames[1:3]
-for (f in filenames) {
-  print(f)
-  analyze(f)
-}
-~~~
-
-
-
-~~~{.output}
-[1] "data/inflammation-01.csv"
-
-~~~
-
-<img src="fig/03-loops-R-loop-analyze-1.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" /><img src="fig/03-loops-R-loop-analyze-2.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" /><img src="fig/03-loops-R-loop-analyze-3.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" />
-
-~~~{.output}
-[1] "data/inflammation-02.csv"
-
-~~~
-
-<img src="fig/03-loops-R-loop-analyze-4.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" /><img src="fig/03-loops-R-loop-analyze-5.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" /><img src="fig/03-loops-R-loop-analyze-6.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" />
-
-~~~{.output}
-[1] "data/inflammation-03.csv"
-
-~~~
-
-<img src="fig/03-loops-R-loop-analyze-7.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" /><img src="fig/03-loops-R-loop-analyze-8.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" /><img src="fig/03-loops-R-loop-analyze-9.png" title="plot of chunk loop-analyze" alt="plot of chunk loop-analyze" style="display: block; margin: auto;" />
-
-Sure enough, the maxima of these data sets show exactly the same ramp as the first, and their minima show the same staircase structure.
-
-> ## Tip {.callout}
+> ## Challenge - Using loops to generate multiple plots {.challenge}
 >
-> In this lesson we saw how to use a simple `for` loop to repeat an operation.
-> As you progress with R, you will learn that there are multiple ways to
-> accomplish this. Sometimes the choice of one method over another is more a
-> matter of personal style, but other times it can have consequences for the
-> speed of your code. For instruction on best practices, see this supplementary
-> [lesson](03-supp-loops-in-depth.html) that demonstrates how to properly repeat
-> operations in R.
-
-> ## Challenge - Using loops to analyze multiple files {.challenge}
+> Our goal is to generate a script (please go back to your `data_analysis` 
+> R script) that analyses our `gapminder` data as follows:
 >
-> 1. Write a function called `analyze_all` that takes a filename pattern as its sole argument and runs `analyze` for each file whose name matches the pattern.
+> 1. Reads the data into a data frame.
+>
+> 2. For each country the script generates three plots; one of the total
+> population, one of life expectancy and one of gross domestic product over
+> the years.
+>
+> 3. Save the script and commit the changes.
 
-
+<!---
 
 > ## Key Points {.callout}
 >
 > * Use `for (variable in collection)` to process the elements of a collection one at a time.
 > * The body of a `for` loop is surrounded by curly braces (`{ }`).
-> * Use `length(thing)` to determine the length of something that contains other values.
+> * Use `uni(thing)` to determine the length of something that contains other values.
 > * Use `list.files(path = "path", pattern = "pattern", full.names = TRUE)` to create a list of files whose names match a pattern.
+-->
 
 > ## Next Steps {.callout}
 >
-> We have now solved our original problem: we can analyze any number of data files with a single command.
+> We have now solved our original problem: we can generate any number of plots with a single command.
 > More importantly, we have met two of the most important ideas in programming:
 >
 > * Use functions to make code easier to re-use and easier to understand.

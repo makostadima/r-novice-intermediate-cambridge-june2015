@@ -438,7 +438,6 @@ calcGDP(gapminder, year=2007, country=c("Argentina", "Australia"))
   gdp <- dat$pop * dat$gdpPercap
   new <- cbind(dat, gdp=gdp)
   return(new)
-}
 ~~~
 
 Finally, we calculated the GDP on our new subset, and created a new
